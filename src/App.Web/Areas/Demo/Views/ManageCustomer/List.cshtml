@@ -1,0 +1,201 @@
+﻿@using App.Web.Application.Extension
+@using App.Web.ViewModels
+@model CustomerViewModel
+@{
+    ViewBag.Title = "Admin";
+    Layout = Html.Shared("_LayoutAdmin.cshtml");
+}
+
+<h2>Admin Portal</h2>
+
+<p id="resultMessage"></p>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>Email</th>
+        @*<th>Bookings</th>
+        <th>Vouchers</th>*@
+        <th>Credits</th>
+        <th>Created</th>
+        <th>Updated</th>
+        <th>Voucher Option</th>
+        <th>Credit Option</th>
+        <th>Edit User</th>
+    </tr>
+    </thead>
+    <tbody>
+    @{ int counter = 1; }
+    @foreach (var customer in Model.Customers)
+    {
+        <tr>
+            <td>@(counter++)</td>
+            <td class="customerId">@customer.Id</td>
+            <td>@customer.FirstName &nbsp; @customer.LastName</td>
+            <td>@customer.MobileNumber</td>
+            <td>@customer.Email</td>
+            @*<td>
+                @if (customer.BookingHistory != null && customer.BookingHistory.Any())
+                {
+                    <ul>
+                        @foreach (var booking in customer.BookingHistory)
+                        {
+                            <li>
+                                @booking.Status
+                            </li>
+                            <li>
+                                @booking.ServiceName
+                            </li>
+                            <li>
+                                @booking.DateTimeSlot
+                            </li>
+                        }
+                    </ul>
+                }
+            </td>
+            <td class="voucher"></td>*@
+            <td class="credit">@customer.StoreCredit</td>
+            <td>@customer.Created</td>
+            <td>@customer.Updated</td>
+            <td>
+                @*Voucher Dropdown*@
+                @if (Model.VoucherTypes == null || Model.VoucherTypes.Count == 0)
+                {
+                    @Html.Label("No voucher available")
+                }
+                else
+                {
+                    <select class="voucherDropdown" style="color: black">
+                        @foreach (var voucherType in Model.VoucherTypes)
+                        {
+                            <option value="@voucherType.Id">@voucherType.Name - @voucherType.Desc</option>
+                        }
+                    </select>
+                }
+                
+                @*@if (customer.IsActive == true)
+                {*@
+                    <button class="btn btn-default sendVoucher">Send Voucher</button>
+                    @*<button class="btn btn-default revokeVoucher">Revoke Voucher</button>*@
+                @*}*@
+            </td>
+            <td>
+                @*Credit Dropdown*@
+                @*<select class="creditDropdown" style="color: black">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="40">40</option>
+                    <option value="50">50</option>
+                </select>*@
+                <input type="number" class="creditDropdown" style="color: black" value="10" min="-100" max="100"/>
+                @*@if (customer.IsActive == true)
+                {*@
+                    <button class="btn btn-default addCredit">Update(+/-) Credits</button>
+                    @*<button class="btn btn-default removeCredit">Remove Credit</button>*@
+                @*}*@
+            </td>
+            <td><a href="Edit/@customer.Id">Edit</a></td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<script src="../../../../Scripts/jquery/jquery-1.10.2.js"></script>
+<script>
+    var serverConfig= {
+        //url: 'http://localhost:49041/Demo',
+        url:'https://beautyfairy.ie/',
+        clientKey: 'REPLACE_ME',
+        authToken1: '',
+        authToken2: '',
+        shopId:2
+    }
+
+    var BookingStatusEnum =
+    {
+        New : 1,
+        Confirmed : 2,
+        Expired : 3,
+        Attended : 4,
+        Cancelled : 5,
+        Rejected : 6
+    }
+
+    $('.addCredit').click(function () {
+        var baseUrl = "/ManageShop/UpdateUserCredit";
+        $(this).prop('disabled', true);
+        var addCreditButton = this;
+        //alert($(addCreditButton).parent().parent().find('.customerId').text());
+        //ajax call to confirm booking
+        $.post(
+            serverConfig.url + baseUrl,
+            {
+                customerId: $(addCreditButton).parent().parent().find('.customerId').text(),
+                shopId: serverConfig.shopId,
+                credits: $(addCreditButton).parent().find('.creditDropdown').val()
+            }
+        ).done(function (data) {
+            console.log(data);
+            $(addCreditButton).parent().parent().find('.credit').text(data["Content"]);
+            $("#resultMessage").text("Credit Updated");
+            //$(addCreditButton).prop('disabled', true);
+            $(addCreditButton).removeAttr('disabled');
+
+            //$(addCreditButton).css('display', 'none');
+            //$(addCreditButton).parent().parent().find('.rejectButton').css('display', 'none');
+        });
+    });
+
+    //$('.removeCredit').click(function () {
+    //    var baseUrl = "/ManageShop/UpdateUserCredit";
+
+    //    var removeCreditButton = this;
+        
+    //    //ajax call to confirm booking
+    //    $.post(
+    //        serverConfig.url + baseUrl,
+    //        {
+    //            customerId: $(removeCreditButton).parent().parent().find('.customerId').text(),
+    //            shopId: serverConfig.shopId,
+    //            credits: -$(removeCreditButton).parent().find('.creditDropdown').val()
+    //        }
+    //    ).done(function (data) {
+    //        console.log(data);
+    //        $(removeCreditButton).parent().parent().find('.credit').text(data["Content"]);
+    //        $("#resultMessage").text("Credit Removed");
+    //        //$(addCreditButton).css('display', 'none');
+    //        //$(addCreditButton).parent().parent().find('.rejectButton').css('display', 'none');
+    //    });
+    //});
+
+    $('.sendVoucher').click(function () {
+
+        var baseUrl = "/ManageShop/SendUserVoucher";
+
+        var sendVoucherButton = this;
+
+        //ajax call to confirm booking
+        $.post(
+            serverConfig.url + baseUrl,
+            {
+                customerId: $(sendVoucherButton).parent().parent().find('.customerId').text(),
+                shopId: serverConfig.shopId,
+                voucherId: $(sendVoucherButton).parent().find('.voucherDropdown').val()
+            }
+        ).done(function (data) {
+            console.log(data);
+            //$(sendVoucherButton).parent().parent().find('.bookingStatus').text(data["Content"]);
+            //TODO: voucher list refresh, not in phase 1.
+            $(sendVoucherButton).parent().parent().find('.voucher').text(data["Content"]);
+            $("#resultMessage").text("Voucher Sent");
+
+        });
+    });
+    
+</script>

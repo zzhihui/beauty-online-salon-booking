@@ -1,0 +1,36 @@
+﻿@using App.Web.Application.Extension
+@model App.Web.ViewModels.ServiceUserViewModel
+@{
+    ViewBag.Title = "Admin";
+    Layout = Html.Shared("_LayoutAdmin.cshtml");
+}
+
+<h2>Admin Portal</h2>
+
+<p id="resultMessage"></p>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>User</th>
+            <th>Services</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ int counter = 1; }
+        @foreach (var serviceUser in Model.ServiceUsers)
+        {
+            <tr>
+                <td>@(counter++)</td>
+                <td class="voucherId">@serviceUser.UserDisplayName</td>
+                <td>
+                    @foreach (var service in serviceUser.ServiceList)
+                    {
+                        @Html.CheckBoxFor(m => service.IsAssignedToUser)
+                        @Html.DisplayFor(m => service.ServiceName)
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

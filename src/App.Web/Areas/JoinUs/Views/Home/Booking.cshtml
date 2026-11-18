@@ -1,0 +1,28 @@
+﻿<div ng-controller="serviceListController">
+    <h4>
+        Please pick date time for your service
+    </h4>
+
+    <div class="form-group">
+        <div ng-hide="errorOccurs" class="text-success">{{resultMessage}}</div>
+        <div ng-show="errorOccurs" class="alert alert-danger">{{error}}</div>
+    </div>
+    
+    <div class="well row">
+        <div class="form-group">
+            <input type="text" id="datetimepicker_dark" ng-class="showCalendar" ng-model="bookingTime" placeholder="Date time picker">
+            <span class="glyphicon glyphicon-calendar"></span>
+        </div>
+    </div>
+
+    <div class="well row">
+        <h4>Quick Book</h4>
+        <select name="serviceSelect" id="serviceSelect" ng-model="serviceSelect">
+            <option ng-repeat="bookingItem in bookingItems" value="{{bookingItem.id}}">{{bookingItem.name}}</option>
+        </select>
+        
+        <button style="margin-left: 20px;" class="btn btn-default" ng-click="quickBook();">Book</button>
+    </div>
+
+    @Html.Partial("_ServiceList")
+</div>

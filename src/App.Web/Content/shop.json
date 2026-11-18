@@ -1,0 +1,51 @@
+﻿{
+  "ShopName": "Asia Market",
+  "ShopNumber": "+353 1 677 9764",
+  "ShopMobile": "",
+  "ShopUrl": "",
+  "ShopAddress1": "18 Drury Street,Dublin 2",
+  "ShopAddress2": "",
+  "Email": "",
+  "ShopBackGroundImagePath": "",
+  "ShopSpecialOffer": "",
+  "IsOpen": true,
+  "IsOpenByOwner": true,
+  "MinOrder": 254.0,
+  "DeliveryCharge": 227.0,
+  "ShopOpenHours": "",
+  "TakePayment": true,
+  "ShopDeliveryOpenHours": "",
+  "GoogleMap": "",
+  "IoSlink": "",
+  "Androidlink": "",
+  "Isactive": true,
+  "ShopNews": [
+    {
+      "News": "New Shop Open",
+      "Created": "2016-10-24T14:52:27.4551809",
+      "Id": 194,
+      "ShopId": 75,
+      "CustomerId": 15,
+      "Guid": "Guid2e096589-df12-4579-9fef-29251e853feb",
+      "Updated": "2014-09-01T12:54:37.1751762",
+      "ErrorMessage": ""
+    },
+    {
+      "News": "We Take order online now",
+      "Created": "2016-10-24T14:52:27.4551809",
+      "Id": 194,
+      "ShopId": 75,
+      "CustomerId": 15,
+      "Guid": "Guid2e096589-df12-4579-9fef-29251e853feb",
+      "Updated": "2014-09-01T12:54:37.1751762",
+      "ErrorMessage": ""
+    }
+  ],
+  "Id": 1,
+  "ShopId": 1,
+  "CustomerId": 1,
+  "Guid": "Guid6371a7d2-4f41-4ec0-a9bd-47ada043cc0f",
+  "Created": "2016-03-19T13:36:36.1764945",
+  "Updated": "2015-11-01T18:35:48.3818346",
+  "ErrorMessage": ""
+} ]

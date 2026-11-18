@@ -1,0 +1,8 @@
+[
+  {
+    "outputFileName": "Areas/Demo/Scripts/app.js",
+    "inputFiles": [
+      "Areas/Demo/Scripts/app/**/*.js"
+    ]
+  }
+]

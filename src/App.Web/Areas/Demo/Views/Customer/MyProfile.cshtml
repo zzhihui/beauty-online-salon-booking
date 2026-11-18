@@ -1,0 +1,115 @@
+﻿<div class="row">
+    <div class="row well">
+        <div class="col-md-12">
+            <form name="profileForm" class="form-horizontal">
+                <fieldset>
+                    <legend>My Profile</legend>
+                    <div ng-show="error" class="alert alert-danger">{{error}}</div>
+
+                    <div class="list-group-item">
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Store Credits:</label>
+                            <div class="col-lg-10">
+                                <input type="text" name="credit" readonly ng-model="customer.credit" class="form-control bg-success">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="list-group-item">
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Email:</label>
+                            <div class="col-lg-10" ng-class="{ 'has-error' : profileForm.customer.email.$invalid}">
+                                <input type="email" name="email" ng-model="customer.email" readonly class="form-control bg-success">
+                                <p ng-show="profileForm.customer.email.$invalid && !profileForm.customer.email.$pristine" class="help-block">Please enter valid email</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="list-group-item">
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">First Name:</label>
+                                <div class="col-lg-10" ng-class="{ 'has-error' : profileForm.customer.firstName.$invalid}">
+                                    <input type="text" name="firstName" placeholder="First Name" required ng-model="customer.firstName" ng-minlength="3" maxlength="50" class="form-control">
+                                    <p ng-show="profileForm.customer.firstName.$invalid && !profileForm.customer.firstName.$pristine" class="help-block">Please enter first name</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Last Name:</label>
+                                <div class="col-lg-10" ng-class="{ 'has-error' : profileForm.customer.lastName.$invalid}">
+                                    <input type="text" name="lastName" placeholder="Last Name" required ng-model="customer.lastName" ng-model-options="{ getterSetter: true }" ng-minlength="3" maxlength="50" class="form-control">
+                                    <p ng-show="profileForm.customer.lastName.$invalid && !profileForm.customer.lastName.$pristine" class="help-block">Please enter last name</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Address:</label>
+                                <div class="col-lg-10" ng-class="{ 'has-error' : profileForm.customer.address.$invalid}">
+                                    <input type="text" name="Address" placeholder="Address" required ng-model="customer.address" ng-minlength="3" maxlength="50" class="form-control">
+                                    <p ng-show="profileForm.customer.address.$invalid && !profileForm.customer.address.$pristine" class="help-block">Please enter your address</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Mobile Number:</label>
+                                <div class="col-lg-10" ng-class="{ 'has-error' : profileForm.customer.phoneNumber.$invalid}">
+                                    <input type="text" name="phoneNumber" placeholder="Mobile Number" required ng-model="customer.phoneNumber" ng-minlength="3" maxlength="50" class="form-control">
+                                    <p ng-show="profileForm.customer.phoneNumber.$invalid && !profileForm.customer.phoneNumber.$pristine" class="help-block">Please enter your mobile number</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="list-group-item">
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Change Password:</label>
+                                <div class="col-lg-10">
+                                    <input type="checkbox" class="form-control" style="width: 29px; height: 29px;" ng-model="customer.changePassword" name="changePassword" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="list-group-item" ng-show="customer.changePassword">
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Current Password:</label>
+                                <div class="col-lg-10" ng-class="{ 'has-error' : profileForm.customer.currentPassword.$invalid}">
+                                    <input type="password" name="password" placeholder="Current Password" ng-required="customer.changePassword" ng-model="customer.currentPassword" class="form-control" autocomplete="new-password">
+                                    <p ng-show="profileForm.customer.currentPassword.$invalid && !profileForm.customer.currentPassword.$pristine" class="help-block">Please enter your password</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item" ng-show="customer.changePassword">
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">New Password:</label>
+                                <div class="col-lg-10" ng-class="{ 'has-error' : profileForm.customer.newPassword.$invalid}">
+                                    <input type="password" name="newPassword" placeholder="New Password" ng-required="customer.changePassword" ng-model="customer.newPassword" ng-minlength="3" maxlength="50" class="form-control">
+                                    <p ng-show="profileForm.customer.newPassword.$invalid && !profileForm.customer.newPassword.$pristine" class="help-block">Please enter new password</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item"  ng-show="customer.changePassword">
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Confirm New Password:</label>
+                                <div class="col-lg-10" ng-class="{ 'has-error' : profileForm.customer.confirmNewPassword.$invalid}">
+                                    <input type="password" name="confirmNewPassword" placeholder="Confirm New Password" ng-required="customer.changePassword" ng-model="customer.confirmNewPassword" ng-minlength="3" maxlength="50" class="form-control">
+                                    <p ng-show="profileForm.customer.confirmNewPasswordconfirmPassword.$invalid && !profileForm.customer.confirmNewPassword.$pristine" class="help-block">Confirm new password</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    <div class="list-group-item">
+                        <div class="form-group">
+                            <p class="text-success col-lg-offset-2">{{resultMessage}}</p>
+                            <div class="col-lg-2 col-lg-offset-2">
+                                <input type="submit" ng-click="Update(customer)" class="btn btn-primary" ng-disabled="!profileForm.$valid" value="Save"/>
+                                <input type="button" ng-click="Reset(profileForm)" class="btn btn-primary" style="margin-left: 20px;" value="Cancel"/>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>

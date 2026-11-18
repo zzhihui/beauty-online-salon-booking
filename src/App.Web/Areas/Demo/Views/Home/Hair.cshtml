@@ -1,0 +1,172 @@
+﻿@*<link rel="stylesheet" type="text/css" href="../../../../Content/datepicker/jquery.datetimepicker.css" />*@
+<div ng-controller="serviceListController">
+    @Html.Partial("_LoginPrompt")
+    <!--<h5>
+        Select a date and time for your service
+    </h5>-->
+
+    <style>
+        .btn-time {
+            margin-top: 5px;
+            width: 80px;
+            margin-right: 5px;
+        }
+
+        .btn-time-active {
+            color: #7a29a3 !important;
+            background-color: #ffffff !important;
+            border-color: #74279b !important;
+        }
+
+        .no-left-padding {
+            padding-left: 0 !important;
+        }
+
+        .modal-dialog-centered {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            /*display: flex;*/
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            min-height: calc(100% - (0.5rem * 2));
+        }
+
+        .modal-content {
+            width: 100%;
+        }
+    </style>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.date').datepicker({
+                daysOfWeekDisabled: "0,1",
+                todayHighlight: true,
+                autoclose: true,
+                disableTouchKeyboard: true,
+                startDate: "-0d",
+                beforeShowDay: function (date) {
+                    //$('.date').data('DateTimePicker').date(null);
+                    
+                    if (date.getMonth() == (new Date()).getMonth())
+                        switch (date.getDate()) {
+                            //case 4:
+                            //    return {
+                            //        tooltip: 'Example tooltip',
+                            //        classes: 'active'
+                            //    };
+                            case 8:
+                                return false;
+                            //case 31:
+                            //    return { classes: "green" };
+                        }
+
+                    //if (date.getMonth() == (new Date()).getMonth()) {
+                    //    date.getDate.forEach(function (item, index) {
+                    //        if (item < 20)
+                    //            return false;
+                    //    });
+                    //}
+
+                },
+                changeDate: function () {
+                    //var selectedDate= new Date($('#datetimepicker').val())
+                    alert("wocao");
+                },
+                changeMonth: function () {
+                    //var selectedDate= new Date($('#datetimepicker').val())
+                    alert("wocao");
+                }
+            }).on("show", function() {//use on events.
+                
+                $(".day").removeClass("active");
+            });
+        });
+
+    </script>
+
+    <!--<div class="well row">
+        <div class="form-group">
+            <input class="date" type="text" readonly="readonly" ng-class="showCalendar" ng-model="bookingTime" placeholder="Date time picker">
+            <span><i class="glyphicon glyphicon-calendar"></i></span>
+        </div>
+
+        <div class="form-group" ng-show="dateSelected">
+            @*<p>
+                    <a class="btn btn-info btn-time" href="#!/category">9:00am</a>
+                    <a class="btn btn-info btn-time" href="#!/category">11:30am</a>
+                    <a class="btn btn-info btn-time" href="#!/category">12:00pm</a>
+                    <a class="btn btn-info btn-time" href="#!/category">3:00pm</a>
+                </p>*@
+            <p>
+                <a ng-repeat="category in availableSlots" class="btn btn-info btn-time" href="#!/category">
+                    {{category}}
+                </a>
+            </p>
+        </div>
+    </div>
+    -->
+    <!--<div class="well row">
+        <div class="form-group">
+            <input type="text" id="datetimepicker_dark" ng-class="showCalendar" ng-model="bookingTime" placeholder="Date time picker" @*disabled="disabled"*@>
+            <span class="glyphicon glyphicon-calendar"></span>
+        </div>
+    </div>-->
+
+    <div class="well row">
+        <h5>Quick book or browse services in details below</h5>
+        <select name="serviceSelect" id="serviceSelect" ng-model="serviceSelect">
+            <option ng-selected="bookingItem.id==serviceSelect" ng-repeat="bookingItem in bookingItems" value="{{bookingItem.id}}">{{bookingItem.name}}</option>
+        </select>
+
+        <button style="margin-left: 20px;" ng-disabled="!userloggedin" class="btn btn-default" data-target="#dateTimeModal" ng-click="showDateTime(serviceSelect, -1);">Book</button>
+    </div>
+
+    <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#dateTimeModal">
+            Launch demo modal
+        </button>-->
+
+    @Html.Partial("_ServiceList")
+
+    <div class="modal fade no-left-padding" id="dateTimeModal" tabindex="-1" style="padding-right: 0; overflow: hidden;" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Please select date and time for your<br/>{{bookingTitle}}</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="well row">
+                        <div class="form-group">
+                            <div ng-show="bookSuccess" class="text-success">{{resultMessage}}</div>
+                            <div ng-show="errorOccurs" class="alert alert-danger">{{error}}</div>
+                        </div>
+
+                        <div class="form-group">
+                            <input class="date" type="text" readonly="readonly" ng-class="showCalendar" ng-model="bookingTime" placeholder="Date time picker">
+                            <span><i class="glyphicon glyphicon-calendar"></i></span>
+                        </div>
+
+                        <div class="form-group" ng-show="dateSelected">
+                            <p>
+                                <a ng-repeat="category in availableSlots" id="{{$index}}" class="btn btn-info btn-time" href="" ng-click="setTime($event, category);">
+                                    {{category}}
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="quickBook();" ng-disabled="!enableBooking">Book</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />*@
+
+

@@ -1,0 +1,27 @@
+﻿/* VENDOR - Default fall-backs and external files.
+========================================================================== */
+/* BASE - Base Variable file along with starting point Mixins and Placeholders.
+========================================================================== */
+/* FRAMEWORK - Structure and layout files.
+========================================================================== */
+/* MODULES - Re-usable site elements.
+========================================================================== */
+body {
+  margin: 0;
+  background: url(/Areas/JoinUs/Content/bg.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  opacity: 1; }
+
+.header-background {
+  background-color: gold; }
+
+.category1 img {
+  width: 100px;
+  height: 100px; }
+
+.navbarColor {
+  color: black; }
+

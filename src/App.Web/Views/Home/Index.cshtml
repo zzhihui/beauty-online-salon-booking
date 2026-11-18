@@ -1,0 +1,19 @@
+﻿@using System.Reflection
+@using App.Web.Controllers
+
+<!-- /container -->
+<div class="container">
+    <div ng-view></div>
+    <hr>
+    <footer>
+        <p>&copy; @DateTime.Now.Year - www.beautyfairy.ie. --Powered by <a href="mailto:info@beautyfairy.ie">Fairy Technology</a> Ver:@Assembly.GetAssembly(typeof(HomeController)).GetName().Version.ToString()</p>
+    </footer>
+</div>
+
+@section scripts {
+
+    @*<script src="@Url.Content("~/Scripts/app/app.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/app/dataservice.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/app/controller.js")" type="text/javascript"></script>*@
+
+}

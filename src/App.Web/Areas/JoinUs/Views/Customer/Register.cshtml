@@ -1,0 +1,84 @@
+﻿<div class="row">
+    <div class="row well">
+        <div class="col-md-12">
+            <form name="registerForm" class="form-horizontal" method="post">
+                <fieldset>
+                    <legend>Customer Registration</legend>
+                    <div ng-show="error" class="alert alert-danger">{{error}}</div>
+                    <div class="list-group-item">
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">First Name:</label>
+                            <div class="col-lg-10" ng-class="{ 'has-error' : registerForm.customer.firstName.$invalid}">
+                                <input type="text" name="firstName" placeholder="First Name" required ng-model="customer.firstName" ng-minlength="3" maxlength="50" class="form-control">
+                                <p ng-show="registerForm.customer.firstName.$invalid && !registerForm.customer.firstName.$pristine" class="help-block">Please enter first name</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-group-item">
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Last Name:</label>
+                            <div class="col-lg-10" ng-class="{ 'has-error' : registerForm.customer.lastName.$invalid}">
+                                <input type="text" name="lastName" placeholder="Last Name" required ng-model="customer.lastName" ng-minlength="3" maxlength="50" class="form-control">
+                                <p ng-show="registerForm.customer.lastName.$invalid && !registerForm.customer.lastName.$pristine" class="help-block">Please enter last name</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-group-item">
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Address:</label>
+                            <div class="col-lg-10" ng-class="{ 'has-error' : registerForm.customer.address.$invalid}">
+                                <input type="text" name="Address" placeholder="Address" required ng-model="customer.address" ng-minlength="3" maxlength="50" class="form-control">
+                                <p ng-show="registerForm.customer.address.$invalid && !registerForm.customer.address.$pristine" class="help-block">Please enter your address</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-group-item">
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Mobile Number:</label>
+                            <div class="col-lg-10" ng-class="{ 'has-error' : registerForm.customer.phoneNumber.$invalid}">
+                                <input type="text" name="phoneNumber" placeholder="Mobile Number" required ng-model="customer.phoneNumber" ng-minlength="3" maxlength="50" class="form-control">
+                                <p ng-show="registerForm.customer.phoneNumber.$invalid && !registerForm.customer.phoneNumber.$pristine" class="help-block">Please enter your mobile number</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-group-item">
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Email:</label>
+                            <div class="col-lg-10" ng-class="{ 'has-error' : registerForm.customer.email.$invalid}">
+                                <input type="email" name="email" placeholder="Email" required ng-model="customer.email" ng-minlength="3" maxlength="50" class="form-control">
+                                <p ng-show="registerForm.customer.email.$invalid && !registerForm.customer.email.$pristine" class="help-block">Please enter valid email</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-group-item">
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Password:</label>
+                            <div class="col-lg-10" ng-class="{ 'has-error' : registerForm.customer.password.$invalid}">
+                                <input type="password" name="password" placeholder="Password" required ng-model="customer.password" ng-minlength="3" maxlength="50" class="form-control">
+                                <p ng-show="registerForm.customer.password.$invalid && !registerForm.customer.password.$pristine" class="help-block">Please enter your password</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-group-item">
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Confirm Password:</label>
+                            <div class="col-lg-10" ng-class="{ 'has-error' : registerForm.customer.confirmPassword.$invalid}">
+                                <input type="password" name="password" placeholder="Password" required ng-model="customer.confirmPassword" ng-minlength="3" maxlength="50" class="form-control">
+                                <p ng-show="registerForm.customer.confirmPassword.$invalid && !registerForm.customer.confirmPassword.$pristine" class="help-block">Please enter same password</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="list-group-item">
+                        <div class="form-group">
+                            <div class="col-lg-2 col-lg-offset-2">
+                                <button type="submit" class="btn btn-primary" ng-click="register()" ng-disabled="!registerForm.$valid">Register</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>

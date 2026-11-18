@@ -1,0 +1,58 @@
+﻿@using App.Web.Application.Extension
+@model App.Web.ViewModels.ServiceUserViewModel
+@{
+    ViewBag.Title = "Admin";
+    Layout = Html.Shared("_LayoutAdmin.cshtml");
+}
+
+<h2>Admin Portal</h2>
+
+<div class="form-group">
+    <a class="btn btn-primary" href="../Admin/Index">Back</a>
+</div>
+
+<form class="form-horizontal" method="POST">
+    <fieldset>
+        @*<p id="resultMessage"></p>*@
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Services</th>
+                </tr>
+            </thead>
+            <tbody>
+               @for (int counter = 0; counter < Model.ServiceUsers.Count; counter++)
+               {
+                <tr>
+                    @*<td>@(counter++)</td>*@
+                    <td class="voucherId">
+                        @Model.ServiceUsers[counter].UserDisplayName
+                        @Html.HiddenFor(m => m.ServiceUsers[counter].UserDisplayName)
+                        @Html.HiddenFor(m => m.ServiceUsers[counter].UserId)
+                    </td>
+                    <td>
+                        @for (int i = 0; i < Model.ServiceUsers[counter].ServiceList.Count; i++)
+                        {
+                            @Html.CheckBoxFor(m => m.ServiceUsers[counter].ServiceList[i].IsAssignedToUser)
+                            @Html.HiddenFor(m => m.ServiceUsers[counter].ServiceList[i].ServiceId)
+                            @Html.DisplayFor(m => m.ServiceUsers[counter].ServiceList[i].ServiceName)
+                            @Html.HiddenFor(m => m.ServiceUsers[counter].ServiceList[i].ServiceName)
+                            <br />
+                        }
+                    </td>
+                </tr>
+               }
+
+            </tbody>
+        </table>
+
+        <div class="list-group-item">
+            <div class="form-group">
+                <div class="col-lg-2">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</form>

@@ -1,0 +1,32 @@
+﻿<div class="well">
+    <form name="forgetPassForm" class="form-horizontal" method="post">
+        <fieldset>
+            <legend>Password Recovery</legend>
+            
+            <div ng-show="errorOccurs" class="alert alert-danger">{{error}}</div>
+
+            <div class="list-group">
+
+                <div class="list-group-item">
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Email:</label>
+                        <div class="col-lg-10" ng-class="{ 'has-error' : forgetPassForm.email.$invalid}">
+                            <input type="email" name="email" placeholder="Email" required ng-model="email" ng-minlength="3" maxlength="50" class="form-control">
+                            <p ng-show="forgetPassForm.email.$invalid && !forgetPassForm.email.$pristine" class="help-block">Please enter valid email</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="list-group-item" ng-hide="errorOccurs">
+                    <p class="text-success">{{result}}</p>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-lg-2 col-lg-offset-2">
+                        <button type="submit" class="btn btn-primary" ng-click="PasswordRecovery()" ng-disabled="!forgetPassForm.$valid">Reset Password</button>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>

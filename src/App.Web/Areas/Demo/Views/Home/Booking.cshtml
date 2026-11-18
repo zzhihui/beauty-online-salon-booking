@@ -1,0 +1,30 @@
+﻿@*<link rel="stylesheet" type="text/css" href="../../../../Content/datepicker/jquery.datetimepicker.css"/>*@
+<div ng-controller="serviceListController">
+    @Html.Partial("_LoginPrompt")
+    <h5>
+        Select a date and time for your service
+    </h5>
+
+    <div class="form-group">
+        <div ng-hide="errorOccurs" class="text-success">{{resultMessage}}</div>
+        <div ng-show="errorOccurs" class="alert alert-danger">{{error}}</div>
+    </div>
+
+    <div class="well row">
+        <div class="form-group">
+            <input type="text" id="datetimepicker_dark" disabled="disabled" ng-class="showCalendar" ng-model="bookingTime" placeholder="Date time picker" />
+            <span class="glyphicon glyphicon-calendar"></span>
+        </div>
+    </div>
+
+    <div class="well row">
+        <h4>Quick Book</h4>
+        <select name="serviceSelect" id="serviceSelect" ng-model="serviceSelect">
+            <option ng-repeat="bookingItem in bookingItems" value="{{bookingItem.id}}">{{bookingItem.name}}</option>
+        </select>
+
+        <button style="margin-left: 20px;" class="btn btn-default" ng-click="quickBook();">Book</button>
+    </div>
+
+    @Html.Partial("_ServiceList")
+</div>

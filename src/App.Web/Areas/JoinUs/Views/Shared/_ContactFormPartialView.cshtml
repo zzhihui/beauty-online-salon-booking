@@ -1,0 +1,168 @@
+﻿<script type="text/javascript">
+    $(document).ready(function () {
+        $("#requestDemo").click(function() {
+            $("#inputMessage").text("Hi there,\n\nI would like to request a demo.");
+        });
+
+        $(".requestDemo").click(function() {
+            $("#inputMessage").text("Hi there,\n\nI would like to request a demo.");
+        });
+    });
+</script>
+
+<section class="mbr-section mbr-section--relative mbr-section--fixed-size" id="contacts2-90" style="background-color: rgb(239, 239, 239);">
+    <div class="mbr-section__container container" ng-controller="contactFormController">
+        <div class="mbr-contacts">
+            <div class="col-sm-6">
+                @*<p><strong>Please fill in the form to request a demo</strong></p>*@
+                @*<div data-form-alert="true"></div>*@
+                <form name="contactForm" method="post" class="form-horizontal">
+                    <input type="hidden" value="QYJJaXGQjybL3tPwmy5gVHDBKrBiZhkaLK3dCJW6kNvmuOXshLhplWMAVdoP2cl/TEEfJN6b5AaXPGdEknB1LdX6uNy0iQCaIXXTCTsdFjPfukdK8Z38sYcUA891l25U" data-form-email="true">
+                    <div ng-show="error" class="col-lg-10 alert alert-danger">{{error}}</div>
+                    <div class="form-group">
+                        <div class="col-lg-10" ng-class="{ 'has-error' : contactForm.inputName.$invalid && contactForm.inputName.$dirty}">
+                            <input type="text" id="contactName" name="inputName" placeholder="Name*" required ng-model="formData.inputName" class="form-control">
+                            
+                            @*<span style="color:red" ng-show="contactForm.inputName.$dirty && contactForm.inputName.$invalid">
+                                <span ng-show="contactForm.inputName.$error.required">Email is required.</span>
+                                <span ng-show="contactForm.inputName.$error.email">Invalid email address.</span>
+                            </span>*@
+
+                            <p ng-show="contactForm.inputName.$invalid && !contactForm.inputName.$pristine" class="help-block">
+                                Please enter your name
+                            </p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-10" ng-class="{ 'has-error' : contactForm.inputEmail.$invalid && contactForm.inputEmail.$dirty}">
+                            <input type="email" name="inputEmail" placeholder="Email*" required ng-model="formData.inputEmail" class="form-control">
+                            
+                            <p ng-show="contactForm.inputEmail.$invalid && !contactForm.inputEmail.$pristine" class="help-block">
+                                Please enter your email address
+                            </p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-10" ng-class="{ 'has-error' : contactForm.formData.inputMobile.$invalid}">
+                            <input type="tel" name="inputMobile" placeholder="Phone*" required ng-model="formData.inputMobile" class="form-control">
+                            <p ng-show="contactForm.inputMobile.$invalid && !contactForm.inputMobile.$pristine" class="help-block">
+                                Please enter your mobile
+                            </p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-10" ng-class="{ 'has-error' : contactForm.formData.inputMessage.$invalid}">
+                            <textarea ng-model="formData.inputMessage" class="form-control" rows="5" id="inputMessage" name="inputMessage" placeholder="Your message..." required="required"></textarea>
+                            <p ng-show="contactForm.inputMessage.$invalid && !contactForm.inputMessage.$pristine" class="help-block">
+                                Please enter message
+                            </p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-10  mbr-buttons--right">
+                            <p class="text-success col-lg-offset-2">{{resultMessage}}</p>
+                            <button type="submit" ng-disabled="!contactForm.$valid"  ng-click="send()" class="mbr-buttons__btn btn btn-lg btn-warning">
+                                CONTACT US
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-6">
+                <div class="row" style="color: #252525;">
+                    <p class="mbr-contacts__text">
+                        <strong>ADDRESS</strong><br><br>
+                        10 Cherry Court<br>
+                        Loughlinstown, Co Dublin<br><br>
+                        <strong>CONTACTS</strong><br><br>
+                        <b>Sales:</b> sales@beautyfairy.ie<br>
+                        <b>Support:</b> support@beautyfairy.ie<br>
+                        <b>Phone:</b> +353 85 864 6675<br>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+    @*<script type="text/javascript">
+        $(document).ready(function () {
+            $("#requestDemo").click(
+                function () {
+                    $("#contactName").text("Zhihui");
+                    $("#inputMessage").val("Zhihui");
+                });
+        });
+    </script>*@
+
+
+@*<legend>Contact Form</legend>*@
+@*<div class="content-2" ng-controller="contactFormController">
+        <div class="col-md-12">
+            <form name="contactform" method="post" class="form-horizontal">
+                <fieldset>
+
+                    <div ng-show="error" class="alert alert-danger">{{error}}</div>
+                    <div class="list-group-item">
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Name:</label>
+                            <div class="col-lg-10" ng-class="{ 'has-error' : contactform.formData.inputName.$invalid}">
+                                <input type="text" name="Name" placeholder="Name" required ng-model="formData.inputName" class="form-control">
+                                <p ng-show="contactform.formData.inputName.$invalid && !contactform.formData.inputName.$pristine" class="help-block">Please enter your email address</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-group-item">
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Email:</label>
+                            <div class="col-lg-10" ng-class="{ 'has-error' : contactform.formData.inputEmail.$invalid}">
+                                <input type="email" name="Email" placeholder="Email" required ng-model="formData.inputEmail" class="form-control">
+                                <p ng-show="contactform.formData.inputEmail.$invalid && !contactform.formData.inputEmail.$pristine" class="help-block">Please enter your email address</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="list-group-item">
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Mobile:</label>
+                            <div class="col-lg-10" ng-class="{ 'has-error' : contactform.formData.inputMobile.$invalid}">
+                                <input type="text" name="Mobile" placeholder="Mobile" required ng-model="formData.inputMobile" class="form-control">
+                                <p ng-show="contactform.formData.inputMobile.$invalid && !contactform.formData.inputMobile.$pristine" class="help-block">Please enter your mobile</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="list-group-item">
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Subject:</label>
+                            <div class="col-lg-10" ng-class="{ 'has-error' : contactform.formData.inputSubject.$invalid}">
+                                <input type="text" name="Subject" placeholder="Subject" required ng-model="formData.inputSubject" class="form-control">
+                                <p ng-show="contactform.formData.inputSubject.$invalid && !contactform.formData.inputSubject.$pristine" class="help-block">Please enter subject</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="list-group-item">
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Message:</label>
+                            <div class="col-lg-10" ng-class="{ 'has-error' : contactform.formData.inputMessage.$invalid}">
+                                <textarea ng-model="formData.inputMessage" class="form-control" rows="5" id="inputMessage" name="inputMessage" placeholder="Your message..." required></textarea>
+                                <p ng-show="contactform.formData.inputMessage.$invalid && !contactform.formData.inputMessage.$pristine" class="help-block">Please enter message</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="list-group-item">
+                        <div class="form-group">
+                            <p class="text-success col-lg-offset-2">{{resultMessage}}</p>
+                            <div class="col-lg-2 col-lg-offset-2">
+                                <button type="submit" class="btn btn-primary" ng-disabled="!contactform.$valid" ng-click="send()">Send Message</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </fieldset>
+            </form>
+        </div>
+    </div>*@

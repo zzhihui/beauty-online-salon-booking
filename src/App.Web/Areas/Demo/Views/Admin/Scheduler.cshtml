@@ -1,0 +1,524 @@
+﻿@using App.Web.Application.Extension
+@model List<App.Web.ViewModels.ScheduleViewModel>
+@{
+    ViewBag.Title = "Admin";
+    Layout = Html.Shared("_LayoutAdmin.cshtml");
+}
+
+    <script type="text/javascript" src="../../../../Scripts/scheduler/jquery-1.11.1.min.js"></script>
+    <link rel="stylesheet" href="../../../../Content/scheduler/jqx.base.css" type="text/css" />
+    <script type="text/javascript" src="../../../../Scripts/scheduler/jqx-all.js"></script>
+    
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var appointments = new Array();
+        var currentDate = new Date();
+
+        var model = '@Html.Raw(Json.Encode(Model))';
+        console.log(model);
+
+        var object = JSON.parse(model);
+
+        console.log(object);
+
+        var defaultAppointment = object[0].scheduleId; //1;
+
+        for (var i = 0; i < object.length; i++) {
+
+            var startDateTime = new Date(parseInt(object[i].StartDateTime.substr(6)));
+            var endDateTime = new Date(parseInt(object[i].EndDateTime.substr(6)));
+            //    new Date(startDateTime);
+            //endDateTime.setMinutes(startDateTime.getMinutes() + object[i].ServiceLength);
+
+            console.log(object[i].ShopId);
+
+            var scheduleStatus = "Booked";
+
+            if (object[i].Description !== null) {
+                scheduleStatus = object[i].Status;
+            }
+
+            var appointment = {
+
+                id: object[i].ScheduleId, //object[i].id,
+                description: object[i].Description, // + ", Contact: " + object[i].CustomerMobile + ", Service: " + object[i].ServiceName,
+                status: scheduleStatus,
+                shopId: object[i].ShopId,
+                subject: object[i].Subject, //CustomerName + ", " + object[i].CustomerMobile + ", " + object[i].ServiceName,//object[i].ShopUserName,
+                calendar: object[i].ShopUserName,//ShopUserName,
+                start: startDateTime,
+                end: endDateTime //new Date(2016, 10, 23, 11, 0, 0)//new Date(object[i].DateTimeSlot).setHours((new Date(object[i].DateTimeSlot)).getHours() + 2)
+            };
+
+            appointments.push(appointment);
+        }
+
+        //var appointment1 = {
+        //    id: "1",
+        //    description: "Full Color with Chris",
+        //    //location: "",
+        //    subject: "Full Color with Chris",
+        //    calendar: "Ciara",
+        //    start: new Date(2016, 5, 16, 9, 0, 0),
+        //    end: new Date(2016, 5, 16, 10, 0, 0)
+        //}
+        //appointments.push(appointment1);
+
+        //var appointment2 = {
+        //    id: "id2",
+        //    description: "Blow Dry with Daniel",
+        //    //location: "",
+        //    subject: "John",
+        //    calendar: "Laura",
+        //    start: new Date(2016, 5, 17, 10, 0, 0),
+        //    end: new Date(2016, 5, 17, 15, 0, 0)
+        //}
+
+        //var appointment3 = {
+        //    id: "id3",
+        //    description: "Course Social Media",
+        //    //location: "",
+        //    subject: "Extension with Antonio",
+        //    calendar: "Claire",
+        //    start: new Date(2016, 5, 16, 11, 0, 0),
+        //    end: new Date(2016, 5, 16, 12, 0, 0)
+        //}
+
+        //var appointment4 = {
+        //    id: "id4",
+        //    description: "New Projects Planning",
+        //    //location: "",
+        //    subject: "Highlights Full Head with Ann",
+        //    calendar: "Michelle",
+        //    start: new Date(2016, 5, 16, 14, 0, 0),
+        //    end: new Date(2016, 5, 16, 16, 0, 0)
+        //}
+
+        //var appointment5 = {
+        //    id: "id5",
+        //    description: "Interview with James",
+        //    //location: "",
+        //    subject: "Full Color with Daniel",
+        //    calendar: "Orla",
+        //    start: new Date(2016, 5, 17, 9, 0, 0),
+        //    end: new Date(2016, 5, 17, 10, 0, 0)
+        //}
+
+        //var appointment6 = {
+        //    id: "id6",
+        //    description: "Interview with Nancy",
+        //    //location: "",
+        //    subject: "Tint and Flood Tight with Julia",
+        //    calendar: "Jenny",
+        //    start: new Date(2016, 5, 17, 15, 0, 0),
+        //    end: new Date(2016, 5, 17, 16, 0, 0)
+        //}
+
+        //appointments.push(appointment2);
+        //appointments.push(appointment3);
+        //appointments.push(appointment4);
+        //appointments.push(appointment5);
+        //appointments.push(appointment6);
+
+
+        // prepare the data
+
+        //var source =
+        //{
+        //    dataType: "array",
+        //    dataFields: [
+        //        { name: 'id', type: 'string' },
+        //        { name: 'description', type: 'string' },
+        //        { name: 'location', type: 'string' },
+        //        { name: 'subject', type: 'string' },
+        //        { name: 'calendar', type: 'string' },
+        //        { name: 'style', type: 'string' },
+        //        { name: 'color', type: 'string' },
+        //        { name: 'background', type: 'string' },
+        //        { name: 'borderColor', type: 'string' },
+        //        { name: 'start', type: 'date' },
+        //        { name: 'end', type: 'date' }
+        //    ],
+        //    id: 'id',
+        //    localData: appointments
+        //};
+        //var adapter = new $.jqx.dataAdapter(source);
+        //$("#scheduler").jqxScheduler({
+        //    date: new $.jqx.date(2016, 6, 16),
+        //    width: 850,
+        //    height: 600,
+        //    source: adapter,
+        //    view: 'weekView',
+        //    showLegend: true,
+        //    renderAppointment: function(data)
+        //    {
+        //        // data Object properties
+        //        // appointment - Object with the properties from the Scheduler.s source object.
+        //        // width - int
+        //        // height- int
+        //        // textColor - hex
+        //        // background - hex
+        //        // borderColor - hex
+        //        // style - string
+        //        // cssClass - string
+        //        // html - html string
+        //        // view - string
+        //        var img = "<img style='top: 2px; position: relative;' src='../../../../Content/scheduler/images/person.png'/>";
+        //        if (data.appointment.subject == "Nancy") {
+        //            img = "<img style='top: 2px; position: relative;' src='../../../../Content/scheduler/images/woman.png'/>";
+        //        }
+        //        else if (data.appointment.subject == "Peter") {
+        //            img = "<img style='top: 2px; position: relative;' src='../../../../Content/scheduler/images/boss.png'/>";
+        //        }
+        //        else if (data.appointment.subject == "Antony") {
+        //            img = "<img style='top: 2px; position: relative;' src='../../../../Content/scheduler/images/oldboss.png'/>";
+        //        }
+        //        else if (data.appointment.subject == "John") {
+        //            img = "<img style='top: 2px; position: relative;' src='../../../../Content/scheduler/images/asian.png'/>";
+        //        }
+
+        //        if (data.view == "weekView" || data.view == "dayView" || data.view == "monthView") {
+        //            data.html =  img + "<i>" + data.appointment.subject + "</i>";
+        //            if (data.appointment.id == "id1") {
+        //                data.style = "#AA4643";
+        //            }
+        //            else if (data.appointment.id == "id2" || data.appointment.id == "id6") {
+        //                data.style = "#309B46";
+        //            }
+        //            else if (data.appointment.id == "id3") {
+        //                data.style = "#447F6E";
+        //            }
+        //       }
+
+        //        return data;
+        //    },
+        //    ready: function () {
+        //        $("#scheduler").jqxScheduler('ensureAppointmentVisible', defaultAppointment);
+        //    },
+        //    resources:
+        //    {
+        //        colorScheme: "scheme05",
+        //        dataField: "calendar",
+        //        source:  new $.jqx.dataAdapter(source)
+        //    },
+        //    appointmentDataFields:
+        //    {
+        //        from: "start",
+        //        to: "end",
+        //        id: "id",
+        //        description: "description",
+        //        location: "location",
+        //        subject: "subject",
+        //        style: "style",
+        //        color: "color",
+        //        background: "background",
+        //        borderColor: "borderColor"
+        //    },
+        //    appointmentsMinHeight: 20,
+        //    views:
+        //    [
+        //        'dayView',
+        //        'weekView',
+        //        'monthView'
+        //    ]
+        //});
+
+        // prepare the data
+        var source =
+        {
+            dataType: "array",
+            dataFields: [
+                { name: 'id', type: 'string' },
+                { name: 'description', type: 'string' },
+                { name: 'status', type: 'string' },
+                { name: 'subject', type: 'string' },
+                { name: 'calendar', type: 'string' },
+                { name: 'start', type: 'date' },
+                { name: 'end', type: 'date' },
+                { name: 'shopId', type: 'string' }
+            ],
+            id: 'id',
+            localData: appointments
+        };
+        //alert(currentDate.getFullYear());
+        //alert(currentDate.getMonth() + 1);
+        //alert(currentDate.getDate());
+
+
+
+        var adapter = new $.jqx.dataAdapter(source);
+
+        $("#scheduler").jqxScheduler({
+            date: new $.jqx.date(currentDate.getFullYear(), currentDate.getMonth() + 1, currentDate.getDate()),
+            width: "1200",
+            height: "900",
+            legendHeight: 60,
+            source: adapter,
+            view: 'weekView',
+            showLegend: true,
+            localization: { editDialogStatuses: {
+                "Booked": "Booked",
+                "Out of Office": "Out of Office"
+            }},
+            ready: function() {
+                $("#scheduler").jqxScheduler('ensureAppointmentVisible', defaultAppointment);
+            },
+            resources:
+            {
+                colorScheme: "scheme05",
+                dataField: "calendar",
+                source: new $.jqx.dataAdapter(source)
+            },
+            editDialogOpen: function(dialog, fields, editAppointment) {
+                fields.repeatContainer.hide();
+
+                //fields.status.prop('disabled', true);
+                //fields.status.attr('disabled', 'disabled');
+                fields.status.attr('disabled', true);
+            },
+
+            editDialogCreate: function (dialog, fields, editAppointment) {
+                //fields.statusContainer.prop("readonly", true);
+                //fields.status.hide();
+
+
+                fields.allDayContainer.hide();
+                fields.locationContainer.hide();
+                fields.timeZoneContainer.hide();
+                fields.colorContainer.hide();
+                fields.repeatContainer.hide();
+
+                //fields.subjectContainer.hide();
+                //fields.resourceContainer.hide();
+                //fields.fromContainer.hide();
+                //fields.toContainer.hide();
+                //fields.fromLabel.html("Start");
+                //fields.toLabel.html("End");
+
+                //var priceField = ''
+                //var personsField = ""
+                //priceField += "<div>"
+                //priceField += "<div class='jqx-scheduler-edit-dialog-label'>Price</div>"
+                //priceField += "<div class='jqx-scheduler-edit-dialog-field'><input type='number' id='price' step='0.01' /></div>"
+                //priceField += "</div>"
+                //personsField += "<div>"
+                //personsField += "<div class='jqx-scheduler-edit-dialog-label'>Persons</div>"
+                //personsField += "<div class='jqx-scheduler-edit-dialog-field'><input type='number' id='persons' /></div>"
+                //personsField += "</div>"
+
+                //var i = 0;
+
+                //$('#dialogscheduler').children('div').each(function () { // loop trough the div's (only first level childs) elements in dialogscheduler
+                //    i += 1;
+                //    if (i == 2) { // places the field in the third position.
+                //        $(this).after(priceField);
+                //        $(this).after(personsField);
+                //    };
+                //});
+            },
+            //appointmentChange: function(event) {
+            //    var args = event.args;
+            //    var appointment = args.appointment;
+            //    console.log(args);
+            //    console.log(appointment);
+            //},
+            renderAppointment: function(data)
+            {
+                //data.appointment.repeatContainer.hide();
+
+
+                // data Object properties
+                // appointment - Object with the properties from the Scheduler.s source object.
+                // width - int
+                // height- int
+                // textColor - hex
+                // background - hex
+                // borderColor - hex
+                // style - string
+                // cssClass - string
+                // html - html string
+                // view - string
+                //console.info('render appointment:', dialog);
+                console.log(data.appointment.resourceId);
+                var img = "<img style='top: 2px; position: relative;' src='../../../../Content/scheduler/images/person.png'/>";
+                if (data.appointment.resourceId == "Orla") {
+                    //img = "<img style='top: 2px; position: relative; width:16px; height:16px;' src='../../../../Areas/Demo/Content/stylists/orla.jpg'/>";
+                    img = "<img style='top: 2px; position: relative;' src='../../../../Content/scheduler/images/woman.png'/>";
+                }
+                else if (data.appointment.resourceId == "Claire") {
+                    img = "<img style='top: 2px; position: relative;' src='../../../../Content/scheduler/images/person.png'/>";
+                }
+                else if (data.appointment.subject == "Antony") {
+                    img = "<img style='top: 2px; position: relative;' src='../../../../Content/scheduler/images/oldboss.png'/>";
+                }
+                else if (data.appointment.subject == "John") {
+                    img = "<img style='top: 2px; position: relative;' src='../../../../Content/scheduler/images/asian.png'/>";
+                }
+                else if (data.appointment.subject == "John") {
+                    img = "<img style='top: 2px; position: relative;' src='../../../../Content/scheduler/images/asian.png'/>";
+                }
+
+                if (data.view == "weekView" || data.view == "dayView" || data.view == "monthView") {
+                    data.html =  img + "<i>" + data.appointment.subject + "</i>";
+                    //if (data.appointment.id == "id1") {
+                    //    data.style = "#AA4643";
+                    //}
+                    //else if (data.appointment.id == "id2" || data.appointment.id == "id6") {
+                    //    data.style = "#309B46";
+                    //}
+                    //else if (data.appointment.id == "id3") {
+                    //    data.style = "#447F6E";
+                    //}
+                }
+
+                //if (data.appointment.status == "busy") {
+                //    data.style = "#B8E6A3";
+                //}
+                //else if (data.appointment.status == "outOfOffice") {
+                //    data.style = "#FFFFFF";
+                //}
+
+                return data;
+            },
+            appointmentDataFields:
+            {
+                from: "start",
+                to: "end",
+                id: "id",
+                description: "description",
+                location: "shopId",
+                subject: "subject",
+                resourceId: "calendar",
+                status:"status"
+            },
+            views:
+            [
+                {
+                    type: 'dayView',
+                    timeRuler: {
+                        scaleStartHour: 8, scaleEndHour: 18, hidden: false, formatString: "hh:mm tt", width: 80
+                    }
+                },
+                {
+                    type: 'weekView',
+                    timeRuler: {
+                         scaleStartHour: 8, scaleEndHour: 18, hidden: false, formatString: "hh:mm tt", width: 80
+                    },
+                    workTime:{
+                         fromDayOfWeek: 2,
+                         toDayOfWeek: 6,
+                         fromHour: 7,
+                         toHour: 19
+                    }},
+                {
+                    type: 'monthView',
+                    timeRuler: {
+                        scaleStartHour: 8, scaleEndHour: 18, hidden: false, formatString: "hh:mm tt", width: 80
+                    },
+                    workTime:{
+                        fromDayOfWeek: 2,
+                        toDayOfWeek: 6,
+                        fromHour: 7,
+                        toHour: 19
+                    }
+                }
+            ]
+        });
+
+        var serverConfig = {
+            //url: 'http://localhost:49041/Demo',
+            url: 'https://beautyfairy.ie/Demo',
+            clientKey: 'REPLACE_ME',
+            authToken1: '',
+            authToken2: '',
+            shopId: 2
+        };
+
+
+        $('#scheduler').on('appointmentChange', function(event) {
+                var args = event.args;
+                var appointment = args.appointment;
+                //alert(appointment.from);
+                //alert(appointment.to);
+                //alert(appointment.id);
+                //alert(appointment.subject);
+                //alert(appointment.description);
+                //alert(appointment.resourceId);
+            //alert(appointment.location);
+                //alert(appointment.status);
+                console.log(args);
+                console.log(appointment);
+
+                var baseUrl = "/Schedule/EditAppointment";
+
+                //ajax call to confirm booking
+                $.post(
+                    serverConfig.url + baseUrl,
+                    {
+                        shopId: appointment.location,
+                        scheduleId: appointment.id,
+                        subject: appointment.subject,
+                        description: appointment.description,
+                        shopUserName: appointment.resourceId,
+                        startDateTime: appointment.from.toString(),
+                        endDateTime: appointment.to.toString(),
+                        status: appointment.status
+                    }
+        ).done(function (data) {
+            console.log(data);
+                    
+        });
+
+        });
+
+        $('#scheduler').on('appointmentDelete', function(event) {
+            var args = event.args;
+            var appointment = args.appointment;
+
+            var baseUrl = "/Schedule/DeleteAppointment";
+
+            //ajax call to confirm booking
+            $.post(
+                serverConfig.url + baseUrl,
+                {
+                    shopId: appointment.location,
+                    scheduleId: appointment.id
+                }
+            ).done(function (data) {
+                console.log(data);
+            });
+        });
+
+        $('#scheduler').on('appointmentAdd', function(event) {
+            var args = event.args;
+            var appointment = args.appointment;
+
+            var baseUrl = "/Schedule/AddAppointment";
+
+            //ajax call to confirm booking
+            $.post(
+                serverConfig.url + baseUrl,
+                {
+                    shopId: appointment.location,
+                    subject: appointment.subject,
+                    description: appointment.description,
+                    shopUserName: appointment.resourceId,
+                    StartDateTime: appointment.from.toString(),
+                    EndDateTime: appointment.to.toString(),
+                    status: appointment.status
+                }
+            ).done(function (data) {
+                console.log(data);
+                    
+                });
+
+        });
+
+    });
+</script>
+
+<body class='default'>
+    <div id="scheduler"></div>
+</body>
+

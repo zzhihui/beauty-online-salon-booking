@@ -1,0 +1,19 @@
+﻿<script type="text/ng-template" id="appointment.modal.html">
+    <div class="modal-header">
+        <h3 class="modal-title">{{bookingItem.name}}</h3>
+    </div>
+    <div class="modal-body">
+        <p class="input-group">
+            <input type="text" class="form-control" uib-datepicker-popup="dd-MMMM-yyyy" ng-model="bookingTime"
+                   datepicker-options="dateOptions" close-text="Close" is-open="datePickerOpened" />
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="pickDate()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+        </p>
+        <uib-timepicker ng-model="bookingTime" hour-step="1" minute-step="15" max="maxBooking" min="minBooking" ng-change="bookingTimeChanged()"></uib-timepicker>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="bookit()">{{bookButtonText}}</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+</script>

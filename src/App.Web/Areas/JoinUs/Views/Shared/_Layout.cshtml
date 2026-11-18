@@ -1,0 +1,61 @@
+﻿@using App.Web.Application.Extension
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html ng-app="webapp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html ng-app="webapp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html ng-app="webapp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html ng-app="webapp" class="no-js">
+<!--<![endif]-->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="generator" content="Mobirise v2.6.1, mobirise.com">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="@Html.Content("client/images/favicon.ico")" type="image/x-icon">
+    <title>@ViewBag.Title</title>
+    <meta name="description" content="Beauty | Salon | Ireland" />
+    <meta />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:700,400&amp;subset=cyrillic,latin,greek,vietnamese">
+    <link rel="stylesheet" href="@Html.Content("client/bootstrap/css/bootstrap.min.css")">
+    <link rel="stylesheet" href="@Html.Content("client/animate.css/animate.min.css")">
+    <link rel="stylesheet" href="@Html.Content("client/socicon/css/socicon.min.css")">
+    <link rel="stylesheet" href="@Html.Content("client/mobirise/css/style.css")">
+    <link rel="stylesheet" href="@Html.Content("client/mobirise-slider/style.css")">
+    <link rel="stylesheet" href="@Html.Content("client/mobirise-gallery/style.css")">
+    <link rel="stylesheet" href="@Html.Content("client/mobirise/css/mbr-additional.css")" type="text/css">
+    <link href="~/Content/fancybox/jquery.fancybox-buttons.css" rel="stylesheet" />
+    <link href="~/Content/fancybox/jquery.fancybox-thumbs.css" rel="stylesheet" />
+    <link href="~/Content/fancybox/jquery.fancybox.css" rel="stylesheet" />
+
+</head>
+<body>
+
+    @RenderBody()
+    <script src="@Html.Content("client/jquery/jquery.min.js")"></script>
+    <script src="@Html.Content("client/bootstrap/js/bootstrap.min.js")"></script>
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script src="@Html.Content("client/smooth-scroll/SmoothScroll.js")"></script>
+    <script src="@Html.Content("client/jquery-mb-ytplayer/jquery.mb.YTPlayer.min.js")"></script>
+    <script src="@Html.Content("client/jarallax/jarallax.js")"></script>
+    <script src="@Html.Content("client/bootstrap-carousel-swipe/bootstrap-carousel-swipe.js")"></script>
+    <script src="@Html.Content("client/masonry/masonry.pkgd.min.js")"></script>
+    <script src="@Html.Content("client/imagesloaded/imagesloaded.pkgd.min.js")"></script>
+    <script src="@Html.Content("client/social-likes/social-likes.js")"></script>
+    <script src="@Html.Content("client/mobirise/js/script.js")"></script>
+    <script src="@Html.Content("client/mobirise-gallery/script.js")"></script>
+    <script src="~/Scripts/bootstrap/respond.js"></script>
+    <script src="~/Scripts/angular/angular.js"></script>
+    <script src="~/Scripts/angular/angular-cookies.js"></script>
+    <script src="~/Scripts/angular/angular-route.js"></script>
+    <script src="~/Scripts/angular/angular-filter.js"></script>
+    <script src="~/Scripts/angular-ui/ui-bootstrap-tpls.js"></script>
+    <script src="~/Scripts/fancybox/jquery.fancybox.js"></script>
+    <script src="~/Scripts/datepicker/jquery.datetimepicker.full.js"></script>
+    <script src="~/Scripts/scheduler/jqx-all.js"></script>
+
+
+
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

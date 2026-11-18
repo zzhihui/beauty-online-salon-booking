@@ -1,0 +1,22 @@
+﻿{
+  "shopinfo": 
+  [
+    {
+      "id": 12,
+      "customerName": "1customerName",
+      "address": "test address1"
+    },
+    {
+      "id": 12,
+      "customerName": "1customerName",
+      "address": "test address1"
+    },
+    {
+      "id": 12,
+      "customerName": "1customerName",
+      "address": "test address1"
+    }
+
+
+  ]
+}

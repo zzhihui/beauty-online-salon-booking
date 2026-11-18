@@ -1,0 +1,83 @@
+﻿@model App.Web.ViewModels.EditorCustomerViewModel
+
+<form class="form-horizontal">
+    <fieldset>
+        <div class="list-group-item">
+            <div class="form-group">
+                <label class="col-lg-2 control-label">
+                    @Html.DisplayNameFor(x => x.Customer.FirstName)
+                </label>
+                <div class="col-lg-10">
+                    @Html.EditorFor(x => x.Customer.FirstName)
+                </div>
+            </div>
+        </div>
+
+        <div class="list-group-item">
+            <div class="form-group">
+                <label class="col-lg-2 control-label">
+                    @Html.DisplayNameFor(x => x.Customer.LastName)
+                </label>
+                <div class="col-lg-10">
+                    @Html.EditorFor(x => x.Customer.LastName)
+                </div>
+            </div>
+        </div>
+
+        <div class="list-group-item">
+            <div class="form-group">
+                <label class="col-lg-2 control-label">
+                    @Html.DisplayNameFor(x => x.Customer.Email)
+                </label>
+                <div class="col-lg-10">
+                    @Html.EditorFor(x => x.Customer.Email)
+                </div>
+            </div>
+        </div>
+
+        <div class="list-group-item">
+            <div class="form-group">
+                <label class="col-lg-2 control-label">
+                    @Html.DisplayNameFor(x => x.Customer.MobileNumber)
+                </label>
+                <div class="col-lg-10">
+                    @Html.EditorFor(x => x.Customer.MobileNumber)
+                </div>
+            </div>
+        </div>
+
+        <div class="list-group-item">
+            <div class="form-group">
+                <label class="col-lg-2 control-label">
+                    @Html.DisplayNameFor(x => x.Customer.Address)
+                </label>
+                <div class="col-lg-10">
+                    @Html.EditorFor(x => x.Customer.Address)
+                </div>
+            </div>
+        </div>
+
+        <div class="list-group-item">
+            <div class="form-group">
+                <label class="col-lg-2 control-label">
+                    @Html.DisplayNameFor(x => x.Customer.MobileNumber)
+                </label>
+                <div class="col-lg-10">
+                    @Html.EditorFor(x => x.Customer.MobileNumber)
+                </div>
+            </div>
+        </div>
+
+        <div class="list-group-item">
+            <div class="form-group">
+                <div class="col-lg-2">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+                <div class="col-lg-2">
+                    <button type="reset" class="btn btn-primary">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+    </fieldset>
+</form>

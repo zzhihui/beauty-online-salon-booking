@@ -1,0 +1,25 @@
+﻿<div class="row" ng-controller="customerAppointmentManagementCtrl">
+    <div class="col-sm-12">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Service name</th>
+                    <th>Appointment time</th>
+                    <th>Confirm state</th>
+                    <th>Change time</th>
+                    <th>Cancel</th>
+                </tr>
+            </thead>
+            <tr ng-repeat="appointment in appointments">
+                <td>{{$index+1}}</td>
+                <td>{{appointment.serviceId}}</td>
+                <td>{{appointment.applicationTime * 1000 | date:"dd-MMM-yyyy,EEE HH:mm"}}</td>
+                <td>{{appointment.approvalResult}}</td>
+                <td><button class="btn btn-default" ng-click="changeThis($index)">Change</button></td>
+                <td><button class="btn btn-default" ng-click="cancelThis($index)">Cancel</button></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<ng-include src="'/Templates/Customer/Component/appointmentModal.html'"></ng-include>

@@ -1,0 +1,35 @@
+﻿<style>
+    td {
+        vertical-align: middle !important;
+    }
+</style>
+<div class="well row">
+    <h4>
+        My Booking History in last 60 days
+    </h4>
+
+    <div class="form-group">
+        <div ng-hide="errorOccurs" class="text-success">{{resultMessage}}</div>
+        <div ng-show="errorOccurs" class="alert alert-danger">{{error}}</div>
+    </div>
+
+    <table class="table table-striped" ng-show="bookingItems != null" ng-model="bookingItems" ng-change="updated()">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Service Name</th>
+                <th>Date Time</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="bookingItem in bookingItems">
+                <td>{{$index+1}}</td>
+                <td>{{bookingItem.serviceName}}</td>
+                <td>{{bookingItem.dateTimeSlot | date : 'yyyy-MM-dd HH:mm:ss' }}</td>
+                <td>{{bookingItem.status}}</td>
+                <td><button class="btn btn-default"  ng-show="bookingItem.status=='New'" ng-click="cancel(bookingItem.id);">Cancel</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

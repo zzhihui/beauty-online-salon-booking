@@ -1,0 +1,87 @@
+﻿<section class="mbr-slider mbr-section mbr-section--no-padding" data-ride="carousel" data-wrap="true">
+    <div class="mbr-section__container container article-slider mbr-section__container--isolated">
+        <div class="col-sm-8 col-sm-offset-2 row well" ng-controller="contactFormController">
+            <div class="col-md-8">
+                <form name="contactForm" method="post" class="form-horizontal">
+                    <fieldset>
+                        <legend>Contact Form</legend>
+                        <div ng-show="error" class="alert alert-danger">{{error}}</div>
+                        <div class="list-group-item">
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Name:</label>
+                                <div class="col-lg-10" ng-class="{ 'has-error' : contactForm.inputName.$invalid && contactForm.inputName.$dirty}">
+                                    <input type="text" name="inputName" placeholder="Name" required ng-model="formData.inputName" class="form-control">
+                                    <p ng-show="contactForm.inputName.$invalid && !contactForm.inputName.$pristine" class="help-block">Please enter your name</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item">
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Email:</label>
+                                <div class="col-lg-10" ng-class="{ 'has-error' : contactForm.inputEmail.$invalid && contactForm.inputEmail.$dirty}">
+                                    <input type="email" name="inputEmail" placeholder="Email" required ng-model="formData.inputEmail" class="form-control">
+                                    <p ng-show="contactForm.inputEmail.$invalid && !contactForm.inputEmail.$pristine" class="help-block">Please enter your email address</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="list-group-item">
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Mobile:</label>
+                                <div class="col-lg-10" ng-class="{ 'has-error' : contactForm.inputMobile.$invalid && contactForm.inputMobile.$dirty}">
+                                    <input type="text" name="inputMobile" placeholder="Mobile" required ng-model="formData.inputMobile" class="form-control">
+                                    <p ng-show="contactForm.inputMobile.$invalid && !contactForm.inputMobile.$pristine" class="help-block">Please enter your mobile</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        @*<div class="list-group-item">
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Subject:</label>
+                            <div class="col-lg-10" ng-class="{ 'has-error' : contactform.formData.inputSubject.$invalid}">
+                                <input type="text" name="Subject" placeholder="Subject" required ng-model="formData.inputSubject" class="form-control">
+                                <p ng-show="contactform.formData.inputSubject.$invalid && !contactform.formData.inputSubject.$pristine" class="help-block">Please enter subject</p>
+                            </div>
+                        </div>
+                    </div>*@
+
+                        <div class="list-group-item">
+                            <div class="form-group">
+                                <label class="col-lg-2 control-label">Message:</label>
+                                <div class="col-lg-10" ng-class="{ 'has-error' : contactForm.inputMessage.$invalid && contactForm.inputMessage.$dirty}">
+                                    <textarea ng-model="formData.inputMessage" class="form-control" rows="5" id="inputMessage" name="inputMessage" placeholder="Your message..." required></textarea>
+                                    <p ng-show="contactForm.inputMessage.$invalid && !contactForm.inputMessage.$pristine" class="help-block">Please enter message</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="list-group-item">
+                            <div class="form-group">
+                                <p class="text-success col-lg-offset-2">{{resultMessage}}</p>
+                                <div class="col-lg-2 col-lg-offset-2">
+                                    <button type="submit" class="btn btn-primary" ng-disabled="!contactform.$valid" ng-click="send()">Send Message</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </form>
+            </div>
+            <div class="col-md-4">
+                <h6>Opening Hours:</h6>
+                <p>
+                    Tuesday to Friday <br />
+                    08:00a.m. – 06:00p.m.<br /><br />
+                    Saturday and Monday <br />
+                    09:00a.m. – 06:00p.m.<br /><br />
+                    Sunday<br />
+                    12:00a.m. - 06:00p.m.
+                </p>
+                <p>
+                    Tel: +353 1 671 4136<br />
+                    Email: demo@beautyfairy.ie
+                </p>
+            </div>
+        </div>
+    </div>
+</section>

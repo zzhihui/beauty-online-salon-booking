@@ -1,0 +1,55 @@
+﻿@using App.Web.Application.Extension
+@model List<App.Service.Contract.Entities.Authentication.WsShopUser>
+@{
+    ViewBag.Title = "Admin";
+    Layout = Html.Shared("_LayoutAdmin.cshtml");
+}
+
+<h2>Admin Portal</h2>
+
+<div class="form-group">
+    <a class="btn btn-primary" href="Add">Add</a>
+</div>
+
+<p id="resultMessage"></p>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Id</th>
+            <th>UserName</th>
+            <th>DisplayName</th>
+            <th>IsActive</th>
+            <th>Email</th>
+            <th>Password</th>
+            <th>Pin</th>
+            <th>UserGroupId</th>
+            <th>Created</th>
+            <th>Updated</th>
+            <th>Options</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ int counter = 1; }
+        @foreach (var shopUser in Model)
+        {
+            <tr>
+                <td>@(counter++)</td>
+                <td class="voucherId">@shopUser.Id</td>
+                <td>@shopUser.UserName</td>
+                <td>@shopUser.DisplayName</td>
+                <td>@shopUser.IsActive</td>
+                <td>@shopUser.Email</td>
+                <td>@shopUser.Password</td>
+                <td>@shopUser.Pin</td>
+                <td>@shopUser.UserGroupId</td>
+                <td>@shopUser.Created</td>
+                <td>@shopUser.Updated</td>
+                <td>
+                    <a href="Edit/@shopUser.Id">Edit</a>
+                    <a href="Delete/@shopUser.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

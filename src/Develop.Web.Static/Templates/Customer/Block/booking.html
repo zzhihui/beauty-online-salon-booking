@@ -1,0 +1,19 @@
+﻿<table class="table table-striped" ng-controller="bookingListCtrl">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Basic charge</th>
+            <th>Book this</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="bookingItem in bookingItems">
+            <td>{{$index+1}}</td>
+            <td>{{bookingItem.name}}</td>
+            <td>{{bookingItem.basicCharge | currency:"EUR€"}}</td>
+            <td><button class="btn btn-default" ng-click="bookThis($index);">Book this</button></td>
+        </tr>
+    </tbody>
+</table>
+<ng-include src="'/Templates/Customer/Component/appointmentModal.html'"></ng-include>

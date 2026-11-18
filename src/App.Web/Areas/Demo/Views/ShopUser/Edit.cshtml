@@ -1,0 +1,101 @@
+﻿@using App.Web.Application.Extension
+@model App.Service.Contract.Entities.Authentication.WsShopUser
+@{
+    ViewBag.Title = "Admin";
+    Layout = Html.Shared("_LayoutAdmin.cshtml");
+}
+<div class="form-group">
+    <a class="btn btn-primary" href="../List">Back</a>
+</div>
+
+@ViewBag.result
+
+<form class="form-horizontal" method="POST">
+    <fieldset>
+        <div class="list-group-item">
+            <div class="form-group">
+                <label class="col-lg-2 control-label">
+                    @Html.LabelFor(x => x.UserName)
+                </label>
+                <div class="col-lg-10">
+                    @Html.EditorFor(x => x.UserName)
+                </div>
+            </div>
+        </div>
+
+        <div class="list-group-item">
+            <div class="form-group">
+                <label class="col-lg-2 control-label">
+                    @Html.LabelFor(x => x.DisplayName)
+                </label>
+                <div class="col-lg-10">
+                    @Html.EditorFor(x => x.DisplayName)
+                </div>
+            </div>
+        </div>
+
+        <div class="list-group-item">
+            <div class="form-group">
+                <label class="col-lg-2 control-label">
+                    @Html.LabelFor(x => x.IsActive)
+                </label>
+                <div class="col-lg-10">
+                    @Html.EditorFor(x => x.IsActive)
+                </div>
+            </div>
+        </div>
+
+        <div class="list-group-item">
+            <div class="form-group">
+                <label class="col-lg-2 control-label">
+                    @Html.LabelFor(x => x.Email)
+                </label>
+                <div class="col-lg-10">
+                    @Html.EditorFor(x => x.Email)
+                </div>
+            </div>
+        </div>
+
+        <div class="list-group-item">
+            <div class="form-group">
+                <label class="col-lg-2 control-label">
+                    @Html.LabelFor(x => x.Password)
+                </label>
+                <div class="col-lg-10">
+                    @Html.EditorFor(x => x.Password)
+                </div>
+            </div>
+        </div>
+
+        <div class="list-group-item">
+            <div class="form-group">
+                <label class="col-lg-2 control-label">
+                    @Html.LabelFor(x => x.Pin)
+                </label>
+                <div class="col-lg-10">
+                    @Html.EditorFor(x => x.Pin)
+                </div>
+            </div>
+        </div>
+        
+        <div class="list-group-item">
+            <div class="form-group">
+                <label class="col-lg-2 control-label">
+                    @Html.LabelFor(x => x.UserGroupId)
+                </label>
+                <div class="col-lg-10">
+                    @Html.EditorFor(x => x.UserGroupId)
+                </div>
+            </div>
+        </div>
+
+        <div class="list-group-item">
+            <div class="form-group">
+                <div class="col-lg-2">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+
+    </fieldset>
+</form>

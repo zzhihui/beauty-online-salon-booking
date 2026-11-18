@@ -1,0 +1,83 @@
+﻿@using System.Reflection
+@using App.Web.Application.Extension
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Html.Partial(Html.Shared("_GoogleAnalytics.cshtml"))
+    @*<link href="@Html.Content("area.css")" rel="stylesheet" />*@
+    
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header pull-left">
+                @Html.ActionLink("Demo", "Index", "Admin", null, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-header pull-right">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mainMenu">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+            </div>
+            <div class="navbar-collapse collapse" id="mainMenu">
+                @if (Request.IsAuthenticated)
+                {
+
+                    <ul class="nav navbar-nav">
+
+                        <li>@Html.ActionLink("Home", "Index", "Admin")</li>
+                        @*<li>@Html.ActionLink("Manage Users", "Index", "ShopUser")</li>*@
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">Manage Options <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("View Scheduler", "Scheduler", "Admin")</li>
+                                <li>@Html.ActionLink("Manage Customer", "List", "ManageCustomer")</li>
+                                <li>@Html.ActionLink("View Feedback", "ViewUserFeedback", "Admin")</li>
+                                <li>@Html.ActionLink("Manage Voucher Types", "List", "VoucherType")</li>
+                                <li>@Html.ActionLink("Manage Service", "List", "ShopService")</li>
+                                <li>@Html.ActionLink("Manage Service User", "List", "ShopServiceUser")</li>
+                                <li>@Html.ActionLink("Manage Shop User", "List", "ShopUser")</li>
+                            </ul>
+                        </li>
+                        <li>&nbsp;</li>
+                        <li>&nbsp;</li>
+                    </ul>
+                }
+                @if (Request.IsAuthenticated)
+                {
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="#">@string.Format("Welcome {0}", User.Identity.Name)</a>
+
+                        </li>
+                        <li>@Html.ActionLink("LogOut", "LogOut", "Admin")</li>
+                    </ul>
+                }
+            </div>
+        </div>
+    </nav>
+    <div class="container body-content">
+        <div id="spinner" style="margin: 0px; padding: 0px; position: fixed; right: 0px; top: 0px; width: 100%; height: 100%; background-color: #666666; z-index: 30001; opacity: .8; filter: alpha(opacity=70); display: none">
+            <p style="position: absolute; top: 30%; left: 45%; color: White;">
+                loading...<img src="@Url.Content("~/Content/loading.gif")" style="width: 100px; height: 100px;">
+            </p>
+        </div>
+        @RenderBody()
+        <hr />
+        <footer>
+            @*Localisation*@
+            <p style="margin-left: 0 !important; padding-left: 0 !important;">&copy; @DateTime.Now.Year - www.beautyfairy.ie Ver:@Assembly.GetAssembly(typeof(App.Web.Controllers.HomeController)).GetName().Version.ToString()</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/scripts")
+    @RenderSection("scripts", false)
+</body>
+</html>

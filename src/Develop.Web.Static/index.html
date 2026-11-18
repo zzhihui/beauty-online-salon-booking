@@ -1,0 +1,673 @@
+﻿<!DOCTYPE html>
+<html ng-app="mainApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>BeautyOnline-index</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width" />
+    <link href="/Content/bootstrap.css" rel="stylesheet" />
+    <link href="/Content/bootstrap-theme.css" rel="stylesheet" />
+    <script src="Scripts/angular.js"></script>
+    <script src="Scripts/angular-ui/ui-bootstrap-tpls.js"></script>
+    <script src="Scripts/angular-cookies.js"></script>
+    <script src="Scripts/angular-route.js"></script>
+    <script src="Scripts/angular-resource.js"></script>
+    <script src="Scripts/App/Customer/bookingListApp.js"></script>
+    <script src="Scripts/App/Customer/customerAppointmentManagementApp.js"></script>
+    <script src="Scripts/App/Customer/Modal/appointmentModal.js"></script>
+    <script src="Scripts/App/ShopAdmin/shopAdmin.js"></script>
+    <style>
+        table.btp-toolbar {
+            color:white;
+            background-color : darkcyan;
+            height:50px;
+            width:100%;
+        }
+
+        td.btp-toolbar-monthtext {
+            font-size:xx-large;
+            font-family:'Courier New';
+        }
+
+        td.btp-toolbar-rtext {
+            font-size:small;
+            font-family:Verdana;
+        }
+
+        td.btp-item {
+            border: 1px solid;
+            height: 50px;
+            width: 50px;
+            text-align: center;
+        }
+
+        td.btp-item-md {
+            width: 133px;
+        }
+
+        td.btp-item-lg {
+            width: 350px;
+        }
+
+        td.btp-item:hover {
+            border: 1px solid;
+            border-color: black;
+            color: white;
+            background-color: blueviolet;
+            cursor:default;
+        }
+
+        td.btp-item-passed {
+            background-color: gainsboro;
+        }
+
+        td.btp-active {
+            background-color: salmon;
+        }
+
+        td.btp-selected {
+            border: 1px solid;
+            border-color: black;
+            color: white;
+            background-color: green;
+        }
+
+        td.btp-not-in-month {
+            color:gray;
+            border: 1px solid;
+            border-color: black;
+        }
+    </style>
+    <script>
+        (function () {
+            'use strict';
+            angular.module("mainApp", ["ngRoute", "ui.bootstrap", "bookingListApp", "customerAppointmentManagementApp", "shopAdminApp", "beauty.timepicker"])
+            .constant("BASE_URL", "https://beautyfairy.ie/")//"http://localhost:2403/")
+            .config(function ($routeProvider, $locationProvider) {
+                $locationProvider.html5Mode(false);
+                $routeProvider.when("/login", {
+                    templateUrl: "/Templates/Shop/Block/login.html"
+                });
+
+                $routeProvider.when("/booking", {
+                    templateUrl: "/Templates/Customer/Block/booking.html",
+                    controller: "bookingListCtrl"
+                });
+
+                $routeProvider.when("/customerAppointmentList", {
+                    templateUrl: "/Templates/Customer/Block/appointmentList.html",
+                    controller: "customerAppointmentManagementCtrl"
+                });
+
+                $routeProvider.when("/bookingManagement", {
+                    templateUrl: "/Templates/ShopAdmin/Block/bookingManagement.html",
+                    controller: "bookingManagementCtrl"
+                });
+
+                $routeProvider.otherwise({
+                    templateUrl: "/Templates/Shop/Block/home.html"
+                });
+            });
+            angular.module("beauty.timepicker", [])
+            .constant("bTimepickerConfig", {
+                timepickerMode: 'week',
+                businessStartHour: 9,
+                businessEndHour: 22,
+                formatHour: 'HH',
+                formatDay: 'dd',
+                formatFullMonth: 'MMMM',
+                formatDayModeTitle: 'fullDate',
+                formatWeekModeTitle: 'ww, MMM, yyyy',
+                formatWeekModeHead: 'EEE, MMM dd, yy',
+                formatMonthModeTitle: 'MMM, yyyy',
+                formatMonthModeHead: 'EEE',
+                formatYearModeTitle: 'yyyy'
+            })
+            .directive("bTimepicker", [function () {
+                return {
+                    controller: "BTimepickerController",
+                    restrict: 'E',
+                    require: ['bTimepicker', '^ngModel'],
+                    scope: {},
+                    templateUrl: 'beauty/timepicker/timepicker.html',
+                    link: function (scope, element, attrs, ctrls) {
+                        var timepickerCtrl = ctrls[0],
+                            ngModelCtrl = ctrls[1];
+                        timepickerCtrl.init(ngModelCtrl);
+                    }
+                };
+            }])
+            .directive("btpToolbar", [function () {
+                return {
+                    restrict: 'E',
+                    require: ['^bTimepicker'],
+                    templateUrl: 'beauty/timepicker/toolbar.html'
+                }
+            }])
+            .directive("bDaymode", [function () {
+                return {
+                    controller: "BDaymodeController",
+                    restrict: 'E',
+                    require: ['^bTimepicker', 'bDaymode'],
+                    templateUrl: 'beauty/timepicker/daymode.html',
+                    link: function (scope, element, attrs, ctrls) {
+                        var timepickerCtrl = ctrls[0],
+                            daymodeCtrl = ctrls[1];
+                        daymodeCtrl.init(timepickerCtrl);
+                    }
+                };
+            }])
+            .directive("bWeekmode", [function () {
+                return {
+                    controller: "BWeekmodeController",
+                    restrict: 'E',
+                    require: ['^bTimepicker', 'bWeekmode'],
+                    templateUrl: 'beauty/timepicker/weekmode.html',
+                    link: function (scope, element, attrs, ctrls) {
+                        var timepickerCtrl = ctrls[0],
+                            weekmodeCtrl = ctrls[1];
+                        weekmodeCtrl.init(timepickerCtrl);
+                    }
+                };
+            }])
+            .directive("bMonthmode", [function () {
+                return {
+                    controller: "BMonthmodeController",
+                    restrict: 'E',
+                    require: ['^bTimepicker', 'bMonthmode'],
+                    templateUrl: 'beauty/timepicker/monthmode.html',
+                    link: function (scope, element, attrs, ctrls) {
+                        var timepickerCtrl = ctrls[0],
+                            monthmodeCtrl = ctrls[1];
+                        monthmodeCtrl.init(timepickerCtrl);
+                    }
+                };
+            }])
+            .directive("bYearmode", [function () {
+                return {
+                    controller: "BYearmodeController",
+                    restrict: 'E',
+                    require: ['^bTimepicker', 'bYearmode'],
+                    templateUrl: 'beauty/timepicker/yearmode.html',
+                    link: function (scope, element, attrs, ctrls) {
+                        var timepickerCtrl = ctrls[0],
+                            yearmodeCtrl = ctrls[1];
+                        yearmodeCtrl.init(timepickerCtrl);
+                    }
+                };
+            }])
+            // B for beautyonline
+            .controller("BTimepickerController", ["$scope", 'bTimepickerConfig', 'uibDateParser', '$log', function ($scope, timepickerConfig, dateParser, $log) {
+                var self = this,
+                    ngModelCtrl = { $setViewValue: angular.noop };
+                this.modes = ['day', 'week', 'month', 'year'];
+                if (!$scope.timepickerOptions) {
+                    $scope.timepickerOptions = {};
+                }
+                // 初始化当前模式
+                [
+                    'businessStartHour',
+                    'businessEndHour',
+                    'formatHour',
+                    'formatDay',
+                    'formatFullMonth',
+                    'formatDayModeTitle',
+                    'formatWeekModeTitle',
+                    'formatWeekModeHead',
+                    'formatMonthModeTitle',
+                    'formatMonthModeHead',
+                    'formatYearModeTitle',
+                    'timepickerMode'
+                ].forEach(function (key) {
+                    switch (key) {
+                        case 'businessStartHour':
+                        case 'businessEndHour':
+                        case 'formatHour':
+                        case 'formatDay':
+                        case 'formatFullMonth':
+                        case 'formatDayModeTitle':
+                        case 'formatWeekModeTitle':
+                        case 'formatWeekModeHead':
+                        case 'formatMonthModeTitle':
+                        case 'formatMonthModeHead':
+                        case 'formatYearModeTitle':
+                            self[key] = angular.isDefined($scope.timepickerOptions[key]) ?
+                                $scope.timepickerOptions[key] : timepickerConfig[key];
+                            break;
+                        case 'timepickerMode':
+                            $scope.timepickerMode = angular.isDefined($scope.timepickerOptions.timepickerMode) ?
+                                $scope.timepickerOptions.timepickerMode : timepickerConfig.timepickerMode;
+                            break;
+                    }
+                });
+
+                // 模式平移
+                $scope.move = function (direction) {
+                    var year = self.activeDate.getFullYear() + direction * (self.step.years || 0),
+                        month = self.activeDate.getMonth() + direction * (self.step.months || 0),
+                        day = self.activeDate.getDate() + direction * (self.step.days || 0);
+                    self.activeDate.setFullYear(year, month, day);
+                    self.refreshView();
+                };
+
+                // 选择格子
+                $scope.select = function (date) {
+                    self.activeDate = new Date(date);
+                    if ($scope.timepickerMode === self.modes[0]) {
+                        ngModelCtrl.$setViewValue(date);
+                        ngModelCtrl.$render();
+                    } else {
+                        $scope.setMode(self.modes[self.modes.indexOf($scope.timepickerMode) - 1]);
+                    }
+                };
+                this.init = function (ngModelCtrl_) {
+                    ngModelCtrl = ngModelCtrl_;
+                    ngModelCtrl.$render = function () {
+                        self.render();
+                    };
+                    // 设置默认选择时间, 默认为下一个小时, 若过营业时间则到第二日第一个小时
+                    var nextAvailble = new Date();
+                    var nowHour = nextAvailble.getHours();
+                    if (nowHour < this.businessEndHour - 1) {
+                        nextAvailble.setHours(nowHour + 1);
+                    } else {
+                        nextAvailble.setDate(nextAvailble.getDate() + 1);
+                        nextAvailble.setHours(this.businessStartHour);
+                    }
+                    self.activeDate = new Date(nextAvailble);
+                    this.activeDate = ngModelCtrl.$modelValue ? new Date(ngModelCtrl.$modelValue) : new Date(nextAvailble);
+                };
+                // 渲染模型
+                this.render = function () {
+                    self.refreshView();
+                };
+                // 刷新显示
+                this.refreshView = function () {
+                    if (this.element) {
+                        $scope.activeDt = this.activeDate;
+                        this._refreshView();
+                    }
+                };
+                // 创建数据模型
+                this.createDateObject = function (date, format) {
+                    var model = ngModelCtrl.$viewValue ? new Date(ngModelCtrl.$viewValue) : null;
+                    var now = new Date();
+                    // 禁止预约当前小时, 所以要给now加一个小时
+                    now.setHours(now.getHours() + 1);
+                    var time = this.compare(date, now);
+                    var dt = {
+                        date: date,
+                        label: dateParser.filter(date, format),
+                        selected: model && this.compare(date, model) === 0,
+                        active: self.activeDate && this.compare(date, self.activeDate) === 0,
+                        past: time < 0,
+                        current: time === 0,
+                        future: time > 0
+                    };
+                    return dt;
+                };
+                // 分割数据模型组
+                this.split = function (arr, rowSize) {
+                    var arrays = [];
+                    while (arr.length > 0) {
+                        arrays.push(arr.splice(0, rowSize));
+                    }
+                    return arrays;
+                };
+                
+                // 设置模型
+                $scope.setMode = function setMode(mode) {
+                    $scope.timepickerMode = mode;
+                    $scope.timepickerOptions.timepickerMode = mode;
+                }
+            }])
+            .controller("BDaymodeController", ["$scope", '$element', 'uibDateParser', '$log', function ($scope, $element, dateParser, $log) {
+                this.element = $element;
+                this.step = {days:1};
+                // 初始化
+                this.init = function (ctrl) {
+                    angular.extend(ctrl, this);
+                    ctrl.refreshView();
+                };
+                // 刷新界面
+                this._refreshView = function () {
+                    var firstHourOfDay = new Date(this.activeDate);
+                    // 设定开始营业时间, this.businessStartHour 默认配置在config里
+                    firstHourOfDay.setHours(this.businessStartHour, 0, 0, 0);
+                    var businessHours = this.businessEndHour - this.businessStartHour;
+                    var hours = this.getDates(firstHourOfDay, businessHours);
+                    for (var i = 0; i < businessHours; i++) {
+                        hours[i] = angular.extend(this.createDateObject(hours[i], this.formatHour), {
+                            // 在这里添加任意内容吧
+                            content : '我在daymode中,给我放一些内容吧!'
+                        });
+                        if (hours[i].selected == true) {
+                            hours[i].content = '我靠,你选到我了!';
+                        }
+                    }
+                    // 此处分割其实没有意义,但为了统一view部分操作,还是统一起来好些;下面还有一些类似的多余操作
+                    $scope.rows = this.split(hours, 1);
+                    $scope.title = dateParser.filter(firstHourOfDay, this.formatDayModeTitle);
+                };
+                // 获取显示时间数组
+                this.getDates = function (start, n) {
+                    var dates = new Array(n),
+                        current = new Date(start),
+                        i = 0,
+                        date;
+                    while (i < n) {
+                        date = new Date(current);
+                        dates[i++] = date;
+                        current.setHours(current.getHours() + 1);
+                    }
+                    return dates;
+                };
+                // 比较时间
+                this.compare = function (date1, date2) {
+                    var date1_ = new Date(date1);
+                    var date2_ = new Date(date2);
+                    date2_.setMinutes(0, 0, 0);
+                    date1_.setMinutes(0, 0, 0);
+                    return date1_ - date2_;
+                };
+            }])
+            .controller("BWeekmodeController", ["$scope", '$element', 'uibDateParser', '$log', function ($scope, $element, dateParser, $log) {
+                this.element = $element;
+                this.step = { days: 7 };
+                // 初始化
+                this.init = function (ctrl) {
+                    angular.extend(ctrl, this);
+                    ctrl.refreshView();
+                };
+                // 刷新界面
+                this._refreshView = function () {
+                    var firstHourOfWeek = new Date(this.activeDate);
+                    var dayOfWeek = firstHourOfWeek.getDay();
+                    firstHourOfWeek.setDate(firstHourOfWeek.getDate() - dayOfWeek);
+                    // 设定开始营业时间, this.businessStartHour 默认配置在config里
+                    firstHourOfWeek.setHours(this.businessStartHour, 0, 0, 0);
+                    var businessHours = this.businessEndHour - this.businessStartHour;
+                    var hours = this.getDates(firstHourOfWeek, businessHours, 7);
+                    for (var i = 0; i < businessHours * 7; i++) {
+                        hours[i] = angular.extend(this.createDateObject(hours[i], this.formatHour), {
+                            // 在这里添加任意内容吧
+                            content: 'in week'
+                        });
+                        if (hours[i].selected == true) {
+                            hours[i].content = 'got me';
+                        }
+                    }
+                    $scope.rows = this.split(hours, 7);
+                    $scope.title = 'Week' + dateParser.filter(firstHourOfWeek, this.formatWeekModeTitle);
+                    $scope.labels = new Array(7);
+                    for (var i = 0; i < 7; i++) {
+                        $scope.labels[i] = dateParser.filter($scope.rows[0][i].date, this.formatWeekModeHead);
+                    }
+                };
+                // 获取显示时间数组
+                this.getDates = function (start, hourSize, dateSize) {
+                    var dates = new Array(hourSize * dateSize),
+                        current = new Date(start),
+                        date;
+                    for (var i = 0; i < hourSize; i++) {
+                        for (var j = 0; j < dateSize; j++) {
+                            date = new Date(current);
+                            dates[i * dateSize + j] = date;
+                            current.setDate(current.getDate() + 1);
+                        }
+                        current.setFullYear(start.getFullYear(), start.getMonth(), start.getDate());
+                        current.setHours(current.getHours() + 1);
+                    }
+                    return dates;
+                };
+                // 比较时间
+                this.compare = function (date1, date2) {
+                    var date1_ = new Date(date1);
+                    var date2_ = new Date(date2);
+                    date2_.setMinutes(0, 0, 0);
+                    date1_.setMinutes(0, 0, 0);
+                    return date1_ - date2_;
+                };
+            }])
+            .controller("BMonthmodeController", ["$scope", '$element', 'uibDateParser', '$log', function ($scope, $element, dateParser, $log) {
+                this.element = $element;
+                this.step = {months:1};
+                // 初始化
+                this.init = function (ctrl) {
+                    angular.extend(ctrl, this);
+                    ctrl.refreshView();
+                };
+                // 刷新界面
+                this._refreshView = function () {
+                    // 这个月的第一天
+                    var firstDayOfMonth = new Date(this.activeDate);
+                    firstDayOfMonth.setDate(1);
+                    // 这个月的第一周的第一天
+                    var firstDate = new Date(firstDayOfMonth);
+                    firstDate.setDate(firstDate.getDate() - firstDayOfMonth.getDay());
+                    // 42是一个六周的日历的总天数
+                    var days = this.getDates(firstDate, 42);
+                    for (var i = 0; i < 42; i++) {
+                        days[i] = angular.extend(this.createDateObject(days[i], this.formatDay), {
+                            // 是其他月份的日期
+                            notInMonth: days[i].getMonth() != this.activeDate.getMonth()
+                        });
+                    }
+                    $scope.rows = this.split(days, 7);
+                    $scope.title = dateParser.filter(firstDayOfMonth, this.formatMonthModeTitle);
+                    $scope.labels = new Array(7);
+                    for (var i = 0; i < 7; i++) {
+                        $scope.labels[i] = dateParser.filter($scope.rows[0][i].date, this.formatMonthModeHead);
+                    }
+                };
+                
+                // 获取显示日期数组
+                this.getDates = function (startDate, n) {
+                    var dates = new Array(n), current = new Date(startDate), i = 0, date;
+                    while (i < n) {
+                        date = new Date(current);
+                        dates[i++] = date;
+                        current.setDate(current.getDate() + 1);
+                    }
+                    return dates;
+                };
+
+                // 比较时间
+                this.compare = function (date1, date2) {
+                    var date1_ = new Date(date1);
+                    var date2_ = new Date(date2);
+                    date1_.setHours(0, 0, 0, 0);
+                    date2_.setHours(0, 0, 0, 0);
+                    return date1_ - date2_;
+                };
+            }])
+            .controller("BYearmodeController", ["$scope", '$element', 'uibDateParser', '$log', function ($scope, $element, dateParser, $log) {
+                this.element = $element;
+                this.step = { years: 1 };
+                // 初始化
+                this.init = function (ctrl) {
+                    angular.extend(ctrl, this);
+                    ctrl.refreshView();
+                };
+                // 刷新界面
+                this._refreshView = function () {
+                    var firstMonth = new Date(this.activeDate);
+                    firstMonth.setMonth(0);
+                    var months = this.getDates(firstMonth, 12);
+                    for (var i = 0; i < 12; i++) {
+                        months[i] = angular.extend(this.createDateObject(months[i], this.formatFullMonth), {
+                            // 是其他月份的日期
+                            content : 'none'
+                        });
+                    }
+                    $scope.rows = this.split(months, 3);
+                    $scope.title = dateParser.filter(firstMonth, this.formatYearModeTitle);
+                };
+
+                // 获取显示日期数组
+                this.getDates = function (startDate, n) {
+                    var dates = new Array(n), current = new Date(startDate), i = 0, date;
+                    while (i < n) {
+                        date = new Date(current);
+                        dates[i++] = date;
+                        current.setMonth(current.getMonth() + 1);
+                    }
+                    return dates;
+                };
+
+                // 比较时间
+                this.compare = function (date1, date2) {
+                    var date1_ = new Date(date1);
+                    var date2_ = new Date(date2);
+                    date1_.setHours(0, 0, 0, 0);
+                    date2_.setHours(0, 0, 0, 0);
+                    date1_.setDate(1);
+                    date2_.setDate(1);
+                    return date1_ - date2_;
+                };
+            }]);
+        })();
+
+    </script>
+    <script type="text/ng-template" id="beauty/timepicker/timepicker.html">
+        <div class="row">
+            <div class="col-lg-12" ng-switch on="timepickerMode">
+                <b-daymode ng-switch-when="day"></b-daymode>
+                <b-weekmode ng-switch-when="week"></b-weekmode>
+                <b-monthmode ng-switch-when="month"></b-monthmode>
+                <b-yearmode ng-switch-when="year"></b-yearmode>
+            </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="beauty/timepicker/toolbar.html">
+        <table class="btp-toolbar">
+            <tr>
+                <td rowspan="2" class="btp-toolbar-monthtext">
+                    {{activeDt|date:'MMM'}}
+                </td>
+                <td class="btp-toolbar-rtext" ng-switch on="timepickerMode">
+                    <span ng-switch-when="day">{{activeDt|date:'dd'}}</span>
+                    <span ng-switch-when="week">Week {{activeDt|date:'ww'}}</span>
+                    <span ng-switch-when="month">{{activeDt|date:'dd'}}</span>
+                </td>
+                <td rowspan="2">
+                    <div class="btn-group btn-group-xs pull-right">
+                        <button type="button" class="btn btn-default" ng-click="move(-1)"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></button>
+                        <button type="button" class="btn btn-default" ng-click="setMode('year')" ng-disabled="timepickerMode == 'year'">YY</button>
+                        <button type="button" class="btn btn-default" ng-click="setMode('month')" ng-disabled="timepickerMode == 'month'">MM</button>
+                        <button type="button" class="btn btn-default" ng-click="setMode('week')" ng-disabled="timepickerMode == 'week'">WK</button>
+                        <button type="button" class="btn btn-default" ng-click="setMode('day')" ng-disabled="timepickerMode == 'day'">DD</button>
+                        <button type="button" class="btn btn-default" ng-click="move(1)"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="btp-toolbar-rtext">{{activeDt|date:'yyyy'}}</td>
+            </tr>
+        </table>
+    </script>
+    <script type="text/ng-template" id="beauty/timepicker/daymode.html">
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="2">
+                        <btp-toolbar></btp-toolbar>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="row in rows">
+                    <td ng-repeat="dt in row">
+                        {{dt.label}}
+                    </td>
+                    <td ng-repeat="dt in row" class="btp-item btp-item-lg"
+                        ng-class="[{'btp-item-passed' : dt.past},{'btp-selected' : dt.selected}, {'btp-active': dt.active && !dt.selected}]"
+                        ng-click="select(dt.date)">{{dt.content}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </script>
+    <script type="text/ng-template" id="beauty/timepicker/weekmode.html">
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="8">
+                        <btp-toolbar></btp-toolbar>
+                    </th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th ng-repeat="dt in rows[0]">{{dt.date | date:'EEE'}}</th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th ng-repeat="dt in rows[0]">{{dt.date | date:'dd'}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="row in rows">
+                    <td>{{row[0].label}}</td>
+                    <td ng-repeat="dt in row" class="btp-item"
+                        ng-class="[{'btp-item-passed' : dt.past},{'btp-selected' : dt.selected}, {'btp-active': dt.active}]"
+                        ng-click="select(dt.date)">
+                        {{dt.content}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </script>
+    <script type="text/ng-template" id="beauty/timepicker/monthmode.html">
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="8">
+                        <btp-toolbar></btp-toolbar>
+                    </th>
+                </tr>
+                <tr>
+                    <th ng-repeat="label in labels">{{label}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="row in rows">
+                    <td ng-repeat="dt in row" class="btp-item"
+                        ng-class="[{'btp-item-passed' : dt.past},{'btp-selected' : dt.selected}, {'btp-active': dt.active}, {'btp-not-in-month' : dt.notInMonth}]"
+                        ng-click="select(dt.date)">
+                        {{dt.label}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </script>
+    <script type="text/ng-template" id="beauty/timepicker/yearmode.html">
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="3">
+                        <btp-toolbar></btp-toolbar>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="row in rows">
+                    <td ng-repeat="dt in row" class="btp-item btp-item-md"
+                        ng-class="[{'btp-item-passed' : dt.past},{'btp-selected' : dt.selected}, {'btp-active': dt.active}]"
+                        ng-click="select(dt.date)">
+                        {{dt.label}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </script>
+</head>
+<body>
+    <div class="container">
+        <ng-view></ng-view>
+        <div class="row">
+            <a href="#/">home</a>
+        </div>
+        <b-timepicker ng-model="pickingTime"></b-timepicker>
+    </div>
+</body>
+</html>

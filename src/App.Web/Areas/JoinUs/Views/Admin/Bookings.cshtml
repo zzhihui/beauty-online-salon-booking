@@ -1,0 +1,129 @@
+﻿@using System.Diagnostics
+@using App.Web.Application.Extension
+
+@model List<App.Web.ViewModels.BookingViewModel>
+@{
+    ViewBag.Title = "Admin";
+    Layout = Html.Shared("_LayoutAdmin.cshtml");
+}
+
+<h2>Admin Portal</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            @*<th>Customer Id</th>*@
+            <th>Date Time</th>
+            @*<th>Service Id</th>*@
+            <th>Service Name</th>
+            <th>Customer Name</th>
+            <th>Customer Contact</th>
+            <th>Service User</th>
+            @*<th>Shop User Id</th>*@
+            <th>Status</th>
+            <th>Created</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ int counter = 1; }
+        @foreach (var booking in Model)
+        {
+            <tr>
+                <td>@(counter++)</td>
+                @*<td>@booking.CustomerId</td>*@
+                <td>@booking.DateTimeSlot</td>
+                @*<td>@booking.ServiceId</td>*@
+                <td>@booking.ServiceName</td>
+                <td>@booking.CustomerName</td>
+                <td>@booking.CustomerMobile</td>
+                <td>@booking.ShopUserName</td>
+                @*<td>@booking.ShopUserId</td>*@
+                <td class="bookingStatus">@booking.Status</td>
+                <td>@booking.Created</td>
+                <td class="confirmBooking">
+                    @if (booking.Status == "New")
+                {
+                        <button class="btn btn-default confirmButton">Confirm</button>
+                    }
+                </td>
+                <td class="rejectBooking">
+                    @if (booking.Status == "New")
+                {
+                        <button class="btn btn-default rejectButton">Reject</button>
+                    }
+                </td>
+                <td style="display: none;" class="bookingId">@booking.Id</td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+
+<script src="../../../../Scripts/jquery/jquery-1.10.2.js"></script>
+<script>
+    var serverConfig= {
+        url: 'http://localhost:49041/joinus',
+        //url:'https://indasoftbeauty.azurewebsites.net',
+        clientKey: 'REPLACE_ME',
+        authToken1: '',
+        authToken2: '',
+        shopId:2
+    }
+
+    var BookingStatusEnum =
+    {
+        New : 1,
+        Confirmed : 2,
+        Expired : 3,
+        Attended : 4,
+        Cancelled : 5,
+        Rejected : 6
+    }
+
+    $('.confirmButton').click(function () {
+        var baseUrl = "/ManageShop/UpdateUserBookingStatus";
+
+        var confirmButton = this;
+
+        //ajax call to confirm booking
+        $.post(
+            serverConfig.url + baseUrl,
+            {
+                bookingId: $(confirmButton).parent().parent().find('.bookingId').text(),
+                shopId: serverConfig.shopId,
+                bookingStatus: BookingStatusEnum.Confirmed
+            }
+        ).done(function (data) {
+            console.log(data);
+            $(confirmButton).parent().parent().find('.bookingStatus').text(data["Content"]);
+
+            $(confirmButton).css('display', 'none');
+            $(confirmButton).parent().parent().find('.rejectButton').css('display', 'none');
+        });
+    });
+
+    $('.rejectButton').click(function () {
+
+        var baseUrl = "/ManageShop/UpdateUserBookingStatus";
+
+        var rejectButton = this;
+
+        //ajax call to confirm booking
+        $.post(
+            serverConfig.url + baseUrl,
+            {
+                bookingId: $(rejectButton).parent().parent().find('.bookingId').text(),
+                shopId: serverConfig.shopId,
+                bookingStatus: BookingStatusEnum.Rejected
+            }
+        ).done(function (data) {
+            console.log(data);
+            $(rejectButton).parent().parent().find('.bookingStatus').text(data["Content"]);
+
+            $(rejectButton).css('display', 'none');
+            $(rejectButton).parent().parent().find('.confirmButton').css('display', 'none');
+        });
+    });
+</script>

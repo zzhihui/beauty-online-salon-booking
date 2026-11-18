@@ -1,0 +1,54 @@
+﻿@using App.Web.Application.Extension
+@model List<App.Service.Contract.Entities.Shop.WsShopService>
+@{
+    ViewBag.Title = "Admin";
+    Layout = Html.Shared("_LayoutAdmin.cshtml");
+}
+
+<h2>Admin Portal</h2>
+
+<div class="form-group">
+    <a class="btn btn-primary" href="Add">Add</a>
+</div>
+
+<p id="resultMessage"></p>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Description</th>
+            <th>Length</th>
+            <th>MaxPerDay</th>
+            <th>PriceFrom</th>
+            <th>PriceTo</th>
+            <th>Updated</th>
+            <th>Created</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ int counter = 1; }
+        @foreach (var voucher in Model)
+        {
+            <tr>
+                <td>@(counter++)</td>
+                <td class="voucherId">@voucher.Id</td>
+                <td>@voucher.Name</td>
+                <td>@voucher.Category</td>
+                <td>@voucher.Description</td>
+                <td>@voucher.Length</td>
+                <td>@voucher.MaxPerDay</td>
+                <td>@voucher.PriceFrom</td>
+                <td>@voucher.PriceTo</td>
+                <td>@voucher.Updated</td>
+                <td>@voucher.Created</td>
+                <td>
+                    <a href="Edit/@voucher.Id">Edit</a>
+                    <a href="Delete/@voucher.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

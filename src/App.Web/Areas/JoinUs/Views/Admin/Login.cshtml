@@ -1,0 +1,44 @@
+﻿@using App.Web.Application.Extension
+@model App.Web.ViewModels.AdminLoginViewModel
+@{
+    ViewBag.Title = "Login";
+    Layout = Html.Shared("_LayoutAdmin.cshtml");
+}
+
+<div class="row well">
+    <div class="col-md-8">
+        <form class="form-horizontal" method="post">
+            <fieldset>
+                <legend>Login</legend>
+                <div class="text-danger">@Model.ErrorMessage</div>
+
+            </fieldset>
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Log in" class="btn btn-default" />
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+

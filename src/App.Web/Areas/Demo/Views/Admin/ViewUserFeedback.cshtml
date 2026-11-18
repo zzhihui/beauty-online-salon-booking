@@ -1,0 +1,43 @@
+﻿@using App.Web.Application.Extension
+@model App.Web.ViewModels.CustomerFeedbackViewModel
+@{
+    ViewBag.Title = "Admin";
+    Layout = Html.Shared("_LayoutAdmin.cshtml");
+}
+
+<h2>Admin Portal</h2>
+
+<p id="resultMessage"></p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Id</th>
+            <th>Created</th>
+            <th>Email</th>
+            <th>Message</th>
+            <th>Name</th>
+            <th>Subject</th>
+            <th>Mobile</th>
+            <th>Reply with Email</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ int counter = 1; }
+        @foreach (var feedback in Model.Feedbacks)
+        {
+            <tr>
+                <td>@(counter++)</td>
+                <td class="feedbackId">@feedback.Id</td>
+                <td>@feedback.Created</td>
+                <td class="feedbackEmail">@feedback.Email</td>
+                <td>@feedback.Message</td>
+                <td class="feedbackName">@feedback.Name</td>
+                <td class="feedbackSubject">@feedback.Subject</td>
+                <td>@feedback.Mobile</td>
+                <td><a href="mailto:@feedback.Email?subject=re:@feedback.Subject&body=Hi @feedback.Name," class="emailLink">Reply</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

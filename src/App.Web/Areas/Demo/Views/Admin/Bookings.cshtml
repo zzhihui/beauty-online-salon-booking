@@ -1,0 +1,66 @@
+﻿@using System.Diagnostics
+@using App.Web.Application.Extension
+@model App.Web.ViewModels.BookingViewModel
+@{
+    ViewBag.Title = "Admin";
+    Layout = Html.Shared("_LayoutAdmin.cshtml");
+}
+
+<h2>Admin Portal</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Customer Id</th>
+            <th>Date Time</th>
+            <th>Service Id</th>
+            <th>Service Name</th>
+            <th>Shop User Id</th>
+            <th>Status</th>
+            <th>Created</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ int counter = 1; }
+        @foreach (var booking in Model.CustomerBookings)
+        {
+<tr>
+                <td>@(counter++)</td>
+                <td>@booking.CustomerId</td>
+                <td>@booking.DateTimeSlot</td>
+                <td>@booking.ServiceId</td>
+                <td>@booking.ServiceName</td>
+                <td>@booking.ShopUserId</td>
+                <td>@booking.Status</td>
+                <td>@booking.Created</td>
+                <td>
+                    @if (booking.Status == "New")
+                    {
+<button class="btn btn-default" onclick="confirmBooking(@booking.Id);">Confirm</button>
+                    }
+                </td>
+                <td>
+                    @if (booking.Status == "New")
+                {
+                        <button class="btn btn-default" onclick="rejectBooking(@booking.Id);">Reject</button>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    function confirmBooking(bookingId) {
+        //ajax call to confirm booking
+    }
+
+    function rejectBooking(bookingId) {
+        //ajax call to reject booking
+    }
+
+    $document.ready(function() {
+
+    });
+</script>
